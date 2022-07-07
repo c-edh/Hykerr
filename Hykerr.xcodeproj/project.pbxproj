@@ -1,0 +1,489 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		9F9EB69ED47AF26958EC348E /* Pods_Hykerr.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0BF95F60AEBA2B999D4E66C /* Pods_Hykerr.framework */; };
+		F4010475287376C200348851 /* HykerrApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4010474287376C200348851 /* HykerrApp.swift */; };
+		F4010477287376C200348851 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4010476287376C200348851 /* ContentView.swift */; };
+		F4010479287376C300348851 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4010478287376C300348851 /* Assets.xcassets */; };
+		F401047C287376C300348851 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F401047B287376C300348851 /* Preview Assets.xcassets */; };
+		F401047E287376C300348851 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401047D287376C300348851 /* Persistence.swift */; };
+		F4010481287376C300348851 /* Hykerr.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F401047F287376C300348851 /* Hykerr.xcdatamodeld */; };
+		F401048828737C3300348851 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401048728737C3300348851 /* SignUpView.swift */; };
+		F401048A287388F400348851 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4010489287388F400348851 /* MainView.swift */; };
+		F401048C28738B5C00348851 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401048B28738B5C00348851 /* LoginView.swift */; };
+		F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DF0B228755DB200433D5B /* AccountManager.swift */; };
+		F44DF0B52875609300433D5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F44DF0B42875609300433D5B /* GoogleService-Info.plist */; };
+		F4B784B82877A483001707A2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B72877A483001707A2 /* MainViewModel.swift */; };
+		F4B784BA2877A56C001707A2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B92877A56C001707A2 /* LoginViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		08D6E631A7A912C6D9496867 /* Pods-Hykerr.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hykerr.debug.xcconfig"; path = "Target Support Files/Pods-Hykerr/Pods-Hykerr.debug.xcconfig"; sourceTree = "<group>"; };
+		7CAF3567FF8FD93E2FFE7B1B /* Pods-Hykerr.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hykerr.release.xcconfig"; path = "Target Support Files/Pods-Hykerr/Pods-Hykerr.release.xcconfig"; sourceTree = "<group>"; };
+		E0BF95F60AEBA2B999D4E66C /* Pods_Hykerr.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hykerr.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4010471287376C200348851 /* Hykerr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hykerr.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4010474287376C200348851 /* HykerrApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HykerrApp.swift; sourceTree = "<group>"; };
+		F4010476287376C200348851 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		F4010478287376C300348851 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F401047B287376C300348851 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		F401047D287376C300348851 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		F4010480287376C300348851 /* Hykerr.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Hykerr.xcdatamodel; sourceTree = "<group>"; };
+		F401048728737C3300348851 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		F4010489287388F400348851 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		F401048B28738B5C00348851 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		F44DF0B228755DB200433D5B /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
+		F44DF0B42875609300433D5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F4B784B52877A2F7001707A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		F4B784B72877A483001707A2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		F4B784B92877A56C001707A2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F401046E287376C200348851 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9F9EB69ED47AF26958EC348E /* Pods_Hykerr.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C7A1DB5D431F72519AA002F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E0BF95F60AEBA2B999D4E66C /* Pods_Hykerr.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CFA35E663D1925BBBBE5609C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				08D6E631A7A912C6D9496867 /* Pods-Hykerr.debug.xcconfig */,
+				7CAF3567FF8FD93E2FFE7B1B /* Pods-Hykerr.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		F4010468287376C200348851 = {
+			isa = PBXGroup;
+			children = (
+				F4010473287376C200348851 /* Hykerr */,
+				F4010472287376C200348851 /* Products */,
+				CFA35E663D1925BBBBE5609C /* Pods */,
+				C7A1DB5D431F72519AA002F0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		F4010472287376C200348851 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4010471287376C200348851 /* Hykerr.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4010473287376C200348851 /* Hykerr */ = {
+			isa = PBXGroup;
+			children = (
+				F4010474287376C200348851 /* HykerrApp.swift */,
+				F44DF0B228755DB200433D5B /* AccountManager.swift */,
+				F4B784B62877A423001707A2 /* ViewModel */,
+				F401048E28739D6E00348851 /* View */,
+				F4010478287376C300348851 /* Assets.xcassets */,
+				F401047D287376C300348851 /* Persistence.swift */,
+				F4B784B52877A2F7001707A2 /* Info.plist */,
+				F44DF0B42875609300433D5B /* GoogleService-Info.plist */,
+				F401047F287376C300348851 /* Hykerr.xcdatamodeld */,
+				F401047A287376C300348851 /* Preview Content */,
+			);
+			path = Hykerr;
+			sourceTree = "<group>";
+		};
+		F401047A287376C300348851 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				F401047B287376C300348851 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		F401048E28739D6E00348851 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F4010476287376C200348851 /* ContentView.swift */,
+				F401048B28738B5C00348851 /* LoginView.swift */,
+				F401048728737C3300348851 /* SignUpView.swift */,
+				F4010489287388F400348851 /* MainView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F4B784B62877A423001707A2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F4B784B72877A483001707A2 /* MainViewModel.swift */,
+				F4B784B92877A56C001707A2 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4010470287376C200348851 /* Hykerr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4010484287376C300348851 /* Build configuration list for PBXNativeTarget "Hykerr" */;
+			buildPhases = (
+				060084AF214BB17C38E667D4 /* [CP] Check Pods Manifest.lock */,
+				F401046D287376C200348851 /* Sources */,
+				F401046E287376C200348851 /* Frameworks */,
+				F401046F287376C200348851 /* Resources */,
+				4AE0ACCFAFFA1425B48E648F /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Hykerr;
+			productName = Hykerr;
+			productReference = F4010471287376C200348851 /* Hykerr.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4010469287376C200348851 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1340;
+				LastUpgradeCheck = 1340;
+				TargetAttributes = {
+					F4010470287376C200348851 = {
+						CreatedOnToolsVersion = 13.4.1;
+					};
+				};
+			};
+			buildConfigurationList = F401046C287376C200348851 /* Build configuration list for PBXProject "Hykerr" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F4010468287376C200348851;
+			productRefGroup = F4010472287376C200348851 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4010470287376C200348851 /* Hykerr */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F401046F287376C200348851 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F401047C287376C300348851 /* Preview Assets.xcassets in Resources */,
+				F4010479287376C300348851 /* Assets.xcassets in Resources */,
+				F44DF0B52875609300433D5B /* GoogleService-Info.plist in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		060084AF214BB17C38E667D4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Hykerr-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4AE0ACCFAFFA1425B48E648F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hykerr/Pods-Hykerr-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Hykerr/Pods-Hykerr-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Hykerr/Pods-Hykerr-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F401046D287376C200348851 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4010481287376C300348851 /* Hykerr.xcdatamodeld in Sources */,
+				F401048C28738B5C00348851 /* LoginView.swift in Sources */,
+				F401048A287388F400348851 /* MainView.swift in Sources */,
+				F401048828737C3300348851 /* SignUpView.swift in Sources */,
+				F401047E287376C300348851 /* Persistence.swift in Sources */,
+				F4010477287376C200348851 /* ContentView.swift in Sources */,
+				F4010475287376C200348851 /* HykerrApp.swift in Sources */,
+				F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */,
+				F4B784BA2877A56C001707A2 /* LoginViewModel.swift in Sources */,
+				F4B784B82877A483001707A2 /* MainViewModel.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		F4010482287376C300348851 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F4010483287376C300348851 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4010485287376C300348851 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08D6E631A7A912C6D9496867 /* Pods-Hykerr.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Hykerr/Preview Content\"";
+				DEVELOPMENT_TEAM = 8CD56KSUZ7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Hykerr/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs your location to use on map";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location to use on map";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreye.Hykerr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F4010486287376C300348851 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CAF3567FF8FD93E2FFE7B1B /* Pods-Hykerr.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Hykerr/Preview Content\"";
+				DEVELOPMENT_TEAM = 8CD56KSUZ7;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Hykerr/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "This app needs your location to use on map";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "This app needs your location to use on map";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.coreye.Hykerr;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F401046C287376C200348851 /* Build configuration list for PBXProject "Hykerr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4010482287376C300348851 /* Debug */,
+				F4010483287376C300348851 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4010484287376C300348851 /* Build configuration list for PBXNativeTarget "Hykerr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4010485287376C300348851 /* Debug */,
+				F4010486287376C300348851 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		F401047F287376C300348851 /* Hykerr.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				F4010480287376C300348851 /* Hykerr.xcdatamodel */,
+			);
+			currentVersion = F4010480287376C300348851 /* Hykerr.xcdatamodel */;
+			path = Hykerr.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = F4010469287376C200348851 /* Project object */;
+}
