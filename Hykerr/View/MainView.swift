@@ -23,7 +23,7 @@ struct MainView: View {
     var body: some View {
         NavigationView{
             ZStack{
-                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).cornerRadius(20).border(.black).ignoresSafeArea(edges: .bottom).onAppear{
+                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).cornerRadius(20).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).onAppear{
                     viewModel.checkIfLocationServiceIsEnabled()
                 }
            
@@ -33,11 +33,11 @@ struct MainView: View {
             }
             .frame(width: 100, height: 100, alignment: .center)
             .shadow(color: .black, radius: 10.0)
-            .background(Color.blue.opacity(0.8)).foregroundColor(.white)
+            .background(K.color.button.buttonColor.opacity(0.8)).foregroundColor(K.color.button.buttonTextColor)
             .cornerRadius(100)
-            .offset(x: 125, y: 250)
+            .offset(x: 125, y: 240)
                 
-            SideMenu(width: UIScreen.main.bounds.width/1.8,
+            SideMenu(width: UIScreen.main.bounds.width/1.5,
                          menuOpened: menuOpened,
                          toggleMenu: toggleMenu)
             
@@ -50,7 +50,7 @@ struct MainView: View {
                         Button(action: {
                             menuOpened.toggle()
                         }, label: {
-                            Image(systemName: "line.3.horizontal").foregroundColor(.blue)
+                            Image(systemName: "line.3.horizontal").foregroundColor(K.color.button.buttonColor)
                         })
                         
                     }
@@ -117,29 +117,24 @@ struct MenuContent: View{
   //  let userProfilePicture: Image?
     let items : [MenuItem] = [
         MenuItem(text: "Settings"),
-        MenuItem(text: "Logout")
     ]
+    
+    @State var userName = "Name"
     @EnvironmentObject var loginViewModel : LoginViewModel
 
     var body: some View{
         
         ZStack{
             Color(UIColor(red: 255/255.0, green: 255/255.0, blue: 1, alpha: 1))
+           
             VStack(alignment: .leading, spacing: 0){
-                
-//                Button(action: {
-//                    self.toggleMenu()
-//                }, label: {
-//                    Image(systemName: "line.3.horizontal").resizable()
-//                }).frame(width:25, height:12,alignment: .bottomTrailing).padding(50).offset(x: 20, y: 20)
-
                 
                 Image(systemName: "person.circle")
                     .resizable().frame(width: 100, height: 100, alignment: .center)
                     .padding()
                     .foregroundColor(.black)
                 
-                Text("Name")
+                Text(userName)
                     .foregroundColor(.black)
                     .frame(alignment:.center)
 
@@ -154,27 +149,25 @@ struct MenuContent: View{
                             .frame(width: 32, height: 32, alignment: .center)
                         
                         Text(item.text)
-                            .foregroundColor(Color.white)
+                            .foregroundColor(Color.black)
                             .bold()
                             .font(.system(size: 22))
                             .multilineTextAlignment(.leading)
                         
                         Spacer()
-                    }.frame(height:30, alignment:.center).background(.blue).cornerRadius(10).padding()
-
-                        .onTapGesture {
-                            
-                        }
+                    }
                     
                     Divider().border(.black, width: 3)
                 }
-                Button("Logout"){
-                    
-                    loginViewModel.logOut()
-
-                }
-            }.padding().offset(y:-250)
-        
+                
+            }.padding()
+            
+            Button("Logout"){loginViewModel.logOut()}
+                .font(.body.bold())
+                .frame(width: 120, height: 40, alignment: .center)
+                .background(.blue)
+                .foregroundColor(.white)
+                .cornerRadius(20)
         }
     }
 }

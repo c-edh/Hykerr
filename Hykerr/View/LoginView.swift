@@ -52,10 +52,13 @@ struct LoginView: View {
                                 
                             }
                             
-                        }.frame(width: 200, height: 50, alignment: .center).background(.blue).foregroundColor(.white).cornerRadius(20).padding(20)
+                        }.frame(width: 200, height: 50, alignment: .center)
+                        .background(K.color.button.buttonColor)
+                        .foregroundColor(K.color.button.buttonTextColor)
+                        .cornerRadius(20).padding(20)
                     
                     Button(forgotPassword ? "Remembered Password?" : "Forgot Password?"){
-                        withAnimation(.easeInOut) {forgotPassword.toggle()}}
+                        withAnimation(.easeInOut) {forgotPassword.toggle()}}.foregroundColor(K.color.Text.textColor)
                     
                 }
                 

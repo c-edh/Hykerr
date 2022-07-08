@@ -24,7 +24,7 @@ struct SignUpView: View {
                 print("hi")
             },label: {  Image(systemName: "person.circle")
                     .resizable().frame(width: 100, height: 100, alignment: .center)
-                .foregroundColor(.blue)})
+                .foregroundColor(K.color.button.buttonColor)})
             Text("Choose Image")
 
             
@@ -55,7 +55,7 @@ struct SignUpView: View {
             .background()
             Button("Sign Up"){
                 
-            }.frame(width: 200, height: 50, alignment: .center).foregroundColor(.white).background(.blue).cornerRadius(20).padding(.top, 20).padding(.bottom,15)
+            }.frame(width: 200, height: 50, alignment: .center).foregroundColor(K.color.button.buttonTextColor).background(K.color.button.buttonColor).cornerRadius(20).padding(.top, 20).padding(.bottom,15)
             
             
         }

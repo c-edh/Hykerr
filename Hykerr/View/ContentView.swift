@@ -53,13 +53,13 @@ struct AppStartView: View {
             NavigationLink("Login", destination: LoginView())
                 .font(.body.bold())
                 .frame(width: 200, height: 50, alignment: .center)
-                .background(.blue)
-                .foregroundColor(.white)
+                .background(K.color.button.buttonColor)
+                .foregroundColor(K.color.button.buttonTextColor)
                 .cornerRadius(20)
             
             
             NavigationLink("Sign Up",destination: SignUpView())
-                .font(.body.bold()).padding(20)
+                .font(.body.bold()).padding(20).foregroundColor(K.color.Text.textColor)
             
         }}
     }
