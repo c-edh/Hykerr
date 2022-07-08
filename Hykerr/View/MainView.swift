@@ -23,10 +23,10 @@ struct MainView: View {
     var body: some View {
         NavigationView{
             ZStack{
-                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).cornerRadius(20).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).onAppear{
+                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
                     viewModel.checkIfLocationServiceIsEnabled()
                 }
-           
+                       
             //Max needs to be in corner, needs to be higher on iphone 8
             Button("Record"){
                 self.menuOpened.toggle()
@@ -98,6 +98,11 @@ struct SideMenu: View {
                 .frame(width: width)
                 .offset(x: menuOpened ? 0 : -width)
                 .animation(.default)
+                .gesture(
+                    DragGesture(minimumDistance: 20).onEnded({ _ in
+                        self.toggleMenu()
+                    })
+                )
             Spacer()
         }.ignoresSafeArea()
     }
@@ -106,6 +111,7 @@ struct SideMenu: View {
 struct MenuItem: Identifiable{
     var id = UUID()
     let text: String
+    let symbol : String
     let hander: () -> Void = {
         print("Tapped Item")
     }
@@ -116,7 +122,7 @@ struct MenuContent: View{
     
   //  let userProfilePicture: Image?
     let items : [MenuItem] = [
-        MenuItem(text: "Settings"),
+        MenuItem(text: "Settings", symbol: "gearshape.fill"),
     ]
     
     @State var userName = "Name"
@@ -125,31 +131,31 @@ struct MenuContent: View{
     var body: some View{
         
         ZStack{
-            Color(UIColor(red: 255/255.0, green: 255/255.0, blue: 1, alpha: 1))
+            Color(UIColor.systemBackground)
            
             VStack(alignment: .leading, spacing: 0){
                 
                 Image(systemName: "person.circle")
                     .resizable().frame(width: 100, height: 100, alignment: .center)
-                    .padding()
-                    .foregroundColor(.black)
+                    .padding(.top, 40)
+                    .foregroundColor(K.color.Text.textColor)
                 
                 Text(userName)
-                    .foregroundColor(.black)
-                    .frame(alignment:.center)
+                    .foregroundColor(K.color.Text.textColor).fontWeight(.heavy)
+                    .frame(width:100,alignment:.center).padding(.top,25)
 
                 ForEach(items){item in
                     
                     HStack{
                         
-                        Image(systemName: "house")
+                        Image(systemName: item.symbol)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .foregroundColor(.white)
+                            .foregroundColor(K.color.Text.textColor)
                             .frame(width: 32, height: 32, alignment: .center)
                         
                         Text(item.text)
-                            .foregroundColor(Color.black)
+                            .foregroundColor(K.color.Text.textColor)
                             .bold()
                             .font(.system(size: 22))
                             .multilineTextAlignment(.leading)
@@ -158,16 +164,17 @@ struct MenuContent: View{
                     }
                     
                     Divider().border(.black, width: 3)
-                }
+                }.padding(.top,20)
                 
-            }.padding()
+            }.padding().offset(x:50,y:-250)
             
             Button("Logout"){loginViewModel.logOut()}
                 .font(.body.bold())
                 .frame(width: 120, height: 40, alignment: .center)
-                .background(.blue)
-                .foregroundColor(.white)
+                .background(K.color.button.buttonColor)
+                .foregroundColor(K.color.button.buttonTextColor)
                 .cornerRadius(20)
+                .offset(y:250)
         }
     }
 }

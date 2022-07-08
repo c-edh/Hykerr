@@ -29,6 +29,7 @@ struct LoginView: View {
                         if !forgotPassword{
                             SecureField("Password",text: $password).disableAutocorrection(true)
                         }
+
                         
                     }.frame(width: 350, height: forgotPassword ? 115 : 160, alignment: .center).cornerRadius(35)
                     

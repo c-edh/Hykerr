@@ -44,9 +44,10 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         case .denied:
             print("Denied location, go into settings to fix it.")
         case .authorizedAlways, .authorizedWhenInUse:
-            region = MKCoordinateRegion(center: locationManager.location!.coordinate,
+            if let l = locationManager.location{
+            region = MKCoordinateRegion(center: l.coordinate,
                 latitudinalMeters: 750,
-                longitudinalMeters: 750)
+                                        longitudinalMeters: 750)}
             
         @unknown default:
             break
