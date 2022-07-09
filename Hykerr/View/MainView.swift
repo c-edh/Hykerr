@@ -18,7 +18,7 @@ struct MainView: View {
     
     @StateObject private var viewModel = MainViewModel()
     @State var menuOpened = false
-
+    @State var locationSearch = ""
     
     var body: some View {
         NavigationView{
@@ -26,6 +26,19 @@ struct MainView: View {
                 Map(coordinateRegion: $viewModel.region,showsUserLocation: true).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
                     viewModel.checkIfLocationServiceIsEnabled()
                 }
+                
+                ZStack {
+                    TextField("", text: $locationSearch)
+                        .multilineTextAlignment(.center)
+                        .frame(width: 220, height: 50, alignment: .center)
+                        .background(K.color.button.buttonColor.opacity(0.8))
+                        .foregroundColor(K.color.button.buttonTextColor)
+                        .cornerRadius(30)
+                    Text("Search").foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+                    Image(systemName: "magnifyingglass").offset(x: 50).foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+                }.offset(y:-275)
+
+                    
                        
             //Max needs to be in corner, needs to be higher on iphone 8
             Button("Record"){

@@ -56,6 +56,8 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         
     }
     
+    //
+    
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         checkLocationAuthorization()
     }

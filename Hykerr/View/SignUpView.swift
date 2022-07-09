@@ -15,16 +15,23 @@ struct SignUpView: View {
     @State private var phoneNumber: String = ""
     @State private var contactNumber: String = ""
     
+    @State private var isShowingImagePhotoPicker = false
+    @State private var profileImage = UIImage(systemName: "person.circle")!
+    
+    @EnvironmentObject var signUpViewModel : SignUpViewModel
+    
     var body: some View {
         
         VStack{
-            Text("Hykerr").font(.largeTitle).fontWeight(.heavy).padding(.bottom, 30)
+            Text("Hykerr").font(.largeTitle).fontWeight(.heavy).padding( 30)
             
-            Button(action:{
-                print("hi")
-            },label: {  Image(systemName: "person.circle")
-                    .resizable().frame(width: 100, height: 100, alignment: .center)
-                .foregroundColor(K.color.button.buttonColor)})
+            Button(action:{isShowingImagePhotoPicker = true},
+                   label: {
+                Image(uiImage: profileImage)
+                    .resizable()
+                    .frame(width: 100, height: 100, alignment: .center).cornerRadius(100).shadow(color: .black, radius: 2, y:3)
+                //Keep shadow???, adjust x value?
+            })
             Text("Choose Image")
 
             
@@ -33,19 +40,19 @@ struct SignUpView: View {
             
                 
                 TextField("Enter Email",
-                          text: $email)
+                          text: $email).disableAutocorrection(true).textInputAutocapitalization(.never)
                 
                 SecureField("Enter Password",
-                            text: $password)
+                            text: $password).disableAutocorrection(true).textInputAutocapitalization(.never)
                 
                 SecureField("Re-Enter Password",
-                            text: $passwordCheck)
+                            text: $passwordCheck).disableAutocorrection(true).textInputAutocapitalization(.never)
                 
                 TextField("Enter Phone Number",
-                          text: $phoneNumber )
+                          text: $phoneNumber ).keyboardType(.phonePad)
                 
                 TextField("Enter Emergency Contact Number",
-                          text: $contactNumber)
+                          text: $contactNumber).keyboardType(.phonePad)
                 
     //            TextField("Enter PhoneNumber",
     //                      value: $phoneNumber, formatter: .phone)
@@ -58,7 +65,9 @@ struct SignUpView: View {
             }.frame(width: 200, height: 50, alignment: .center).foregroundColor(K.color.button.buttonTextColor).background(K.color.button.buttonColor).cornerRadius(20).padding(.top, 20).padding(.bottom,15)
             
             
-        }
+        }.sheet(isPresented: $isShowingImagePhotoPicker, content: {
+            PhotoPicker(profileImage: $profileImage)
+        })
         
     }
 }

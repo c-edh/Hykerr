@@ -23,6 +23,7 @@ class AccountManager: ObservableObject{
                     completion(true, "User's Account has been made")
                 }
             }
+        
  
         //Store user's name, contact information;
         
