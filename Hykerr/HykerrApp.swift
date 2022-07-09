@@ -16,9 +16,9 @@ struct HykerrApp: App {
 
     var body: some Scene {
         WindowGroup {
-            let loginViewModel  = LoginViewModel()
+            let authenticViewModel  = AuthenticViewModel()
             ContentView()
-                .environmentObject(loginViewModel)
+                .environmentObject(authenticViewModel)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

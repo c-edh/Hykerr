@@ -7,9 +7,14 @@
 
 import Firebase
 
-class LoginViewModel: ObservableObject{
+class AuthenticViewModel: ObservableObject{
     
     @Published var signedIn = false
+    @Published var loginUserErrorFeedback = ""
+    
+   private enum loginError{
+        
+    }
     
     // Login User
     func loginUser(email: String, password: String){
@@ -24,6 +29,22 @@ class LoginViewModel: ObservableObject{
                 }
             }
     }
+    
+    func createUserAccount(email: String, password: String){
+        
+            Auth.auth().createUser(withEmail: email, password: password) {[weak self] authResult, error in
+                if let e = error{
+                    print(e.localizedDescription)
+                }
+                else{
+                    print("account has been created")
+                    DispatchQueue.main.async {
+                        self?.signedIn = true
+                    }
+                }
+            }
+    }
+    
     
     //Send reset request
     func resetUserPassword(_ email: String){

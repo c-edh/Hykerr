@@ -20,10 +20,9 @@
 		F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DF0B228755DB200433D5B /* AccountManager.swift */; };
 		F44DF0B52875609300433D5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F44DF0B42875609300433D5B /* GoogleService-Info.plist */; };
 		F4B784B82877A483001707A2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B72877A483001707A2 /* MainViewModel.swift */; };
-		F4B784BA2877A56C001707A2 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B92877A56C001707A2 /* LoginViewModel.swift */; };
+		F4B784BA2877A56C001707A2 /* AuthenticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */; };
 		F4B784BC2877C8DA001707A2 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784BB2877C8DA001707A2 /* K.swift */; };
 		F4CE7AA52878D297008703E7 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CE7AA42878D297008703E7 /* PhotoPicker.swift */; };
-		F4F785CE2879283D0097C424 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F785CD2879283D0097C424 /* SignUpViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,10 +43,9 @@
 		F44DF0B42875609300433D5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F4B784B52877A2F7001707A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F4B784B72877A483001707A2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
-		F4B784B92877A56C001707A2 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticViewModel.swift; sourceTree = "<group>"; };
 		F4B784BB2877C8DA001707A2 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		F4CE7AA42878D297008703E7 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
-		F4F785CD2879283D0097C424 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,8 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				F4B784B72877A483001707A2 /* MainViewModel.swift */,
-				F4B784B92877A56C001707A2 /* LoginViewModel.swift */,
-				F4F785CD2879283D0097C424 /* SignUpViewModel.swift */,
+				F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -261,7 +258,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4010481287376C300348851 /* Hykerr.xcdatamodeld in Sources */,
-				F4F785CE2879283D0097C424 /* SignUpViewModel.swift in Sources */,
 				F4CE7AA52878D297008703E7 /* PhotoPicker.swift in Sources */,
 				F401048C28738B5C00348851 /* LoginView.swift in Sources */,
 				F401048A287388F400348851 /* MainView.swift in Sources */,
@@ -271,7 +267,7 @@
 				F4B784BC2877C8DA001707A2 /* K.swift in Sources */,
 				F4010475287376C200348851 /* HykerrApp.swift in Sources */,
 				F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */,
-				F4B784BA2877A56C001707A2 /* LoginViewModel.swift in Sources */,
+				F4B784BA2877A56C001707A2 /* AuthenticViewModel.swift in Sources */,
 				F4B784B82877A483001707A2 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

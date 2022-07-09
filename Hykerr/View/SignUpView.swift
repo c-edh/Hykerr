@@ -18,7 +18,10 @@ struct SignUpView: View {
     @State private var isShowingImagePhotoPicker = false
     @State private var profileImage = UIImage(systemName: "person.circle")!
     
-    @EnvironmentObject var signUpViewModel : SignUpViewModel
+    @State var userHint = ""
+    @State private var showUserHint = false
+    
+    @EnvironmentObject var authenticViewModel : AuthenticViewModel
     
     var body: some View {
         
@@ -54,13 +57,26 @@ struct SignUpView: View {
                 TextField("Enter Emergency Contact Number",
                           text: $contactNumber).keyboardType(.phonePad)
                 
-    //            TextField("Enter PhoneNumber",
-    //                      value: $phoneNumber, formatter: .phone)
-//
+           
+                
+                
             }.frame(
-                width: 350, height: 350, alignment: .center).cornerRadius(40)
+                width: 350, height: 325, alignment: .center).cornerRadius(40)
             .background()
+            
+            if showUserHint == true{
+                Text(userHint).padding()
+            }
             Button("Sign Up"){
+                if (password == passwordCheck){
+                    authenticViewModel.createUserAccount(email: email, password: password)
+                    
+                    //Take user to the next screen
+                    
+                }else{
+                    showUserHint = true
+                    userHint = "Passwords do not match"
+                }
                 
             }.frame(width: 200, height: 50, alignment: .center).foregroundColor(K.color.button.buttonTextColor).background(K.color.button.buttonColor).cornerRadius(20).padding(.top, 20).padding(.bottom,15)
             

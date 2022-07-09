@@ -13,26 +13,28 @@ import FirebaseAuth
 struct ContentView: View {
    
     @State var userIsLogout  = false
-    @EnvironmentObject var loginViewModel : LoginViewModel
+    @EnvironmentObject var authenticViewModel : AuthenticViewModel
 
     var body: some View {
-        if !loginViewModel.signedIn{
-                AppStartView()
+        
+        //Keeps user signed in
+        if (authenticViewModel.signedIn == true) || (Auth.auth().currentUser != nil){
+            MainView()
         }else{
-            withAnimation(Animation.easeIn(duration: 0.5)) {
-                MainView()
-            }
-          
+            AppStartView()
+
         }
         
     }
-
+        
 }
+
+
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(LoginViewModel())
+        ContentView().environmentObject(AuthenticViewModel())
         
         
     }

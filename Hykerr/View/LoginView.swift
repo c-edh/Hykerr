@@ -12,12 +12,12 @@ import FirebaseAuth
 struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
-    @State var forgotPassword = false
+    @State private var forgotPassword = false
     
-    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var authenticViewModel: AuthenticViewModel
     
     var body: some View {
-            if !loginViewModel.signedIn{
+            if !authenticViewModel.signedIn{
                 VStack{
                     HStack {
                         Image("hykerrLogo").resizable().frame(width: 100, height: 100)
@@ -40,7 +40,7 @@ struct LoginView: View {
                             }
                             if forgotPassword{
                                 //Send email to firebase
-                                loginViewModel.resetUserPassword(email)
+                                authenticViewModel.resetUserPassword(email)
                                 
                                 
                             }else{
@@ -48,7 +48,7 @@ struct LoginView: View {
                                 guard !password.isEmpty else{
                                     return
                                 }
-                                loginViewModel.loginUser(email: email, password: password)
+                                authenticViewModel.loginUser(email: email, password: password)
      
                                 
                             }
@@ -79,6 +79,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView().environmentObject(LoginViewModel())
+        LoginView().environmentObject(AuthenticViewModel())
     }
 }

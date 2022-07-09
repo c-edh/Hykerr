@@ -19,6 +19,7 @@ struct MainView: View {
     @StateObject private var viewModel = MainViewModel()
     @State var menuOpened = false
     @State var locationSearch = ""
+    @State var searchBarShowing = true
     
     var body: some View {
         NavigationView{
@@ -27,33 +28,37 @@ struct MainView: View {
                     viewModel.checkIfLocationServiceIsEnabled()
                 }
                 
-                ZStack {
-                    TextField("", text: $locationSearch)
-                        .multilineTextAlignment(.center)
-                        .frame(width: 220, height: 50, alignment: .center)
-                        .background(K.color.button.buttonColor.opacity(0.8))
-                        .foregroundColor(K.color.button.buttonTextColor)
-                        .cornerRadius(30)
-                    Text("Search").foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
-                    Image(systemName: "magnifyingglass").offset(x: 50).foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
-                }.offset(y:-275)
+                //TODO Add sliding animation to dismiss searchbar
+                
+                if searchBarShowing == true{
+                    SearchBarField(locationSearch: $locationSearch)
+                }
+               
+                else{
+                    EmptyView()
+                        .frame(width: 220, height: 30, alignment: .center)
+                        .background(.black).offset(y:-300)
+                        .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local).onEnded({ value in
+                            if value.translation.height > 0{ searchBarShowing.toggle() }}))
+                    }
+            
 
                     
                        
-            //Max needs to be in corner, needs to be higher on iphone 8
-            Button("Record"){
-                self.menuOpened.toggle()
-            }
-            .frame(width: 100, height: 100, alignment: .center)
-            .shadow(color: .black, radius: 10.0)
-            .background(K.color.button.buttonColor.opacity(0.8)).foregroundColor(K.color.button.buttonTextColor)
-            .cornerRadius(100)
-            .offset(x: 125, y: 240)
+                //Max needs to be in corner, needs to be higher on iphone 8
+                Button("Record"){
+                    self.menuOpened.toggle()
+                }
+                .frame(width: 100, height: 100, alignment: .center)
+                .shadow(color: .black, radius: 10.0)
+                .background(K.color.button.buttonColor.opacity(0.8)).foregroundColor(K.color.button.buttonTextColor)
+                .cornerRadius(100)
+                .offset(x: 125, y: 240)
+                    
+                SideMenu(width: UIScreen.main.bounds.width/1.5,
+                             menuOpened: menuOpened,
+                             toggleMenu: toggleMenu)
                 
-            SideMenu(width: UIScreen.main.bounds.width/1.5,
-                         menuOpened: menuOpened,
-                         toggleMenu: toggleMenu)
-            
             }
         
             .navigationTitle(menuOpened ? "": "Hykerr")
@@ -139,7 +144,7 @@ struct MenuContent: View{
     ]
     
     @State var userName = "Name"
-    @EnvironmentObject var loginViewModel : LoginViewModel
+    @EnvironmentObject var authenticViewModel : AuthenticViewModel
 
     var body: some View{
         
@@ -181,7 +186,7 @@ struct MenuContent: View{
                 
             }.padding().offset(x:50,y:-250)
             
-            Button("Logout"){loginViewModel.logOut()}
+            Button("Logout"){authenticViewModel.logOut()}
                 .font(.body.bold())
                 .frame(width: 120, height: 40, alignment: .center)
                 .background(K.color.button.buttonColor)
@@ -200,7 +205,29 @@ struct MenuContent: View{
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         
-        MainView().environmentObject(LoginViewModel())
+        MainView().environmentObject(AuthenticViewModel())
         
+    }
+}
+
+struct SearchBarField: View {
+    
+    @Binding var locationSearch: String
+    var body: some View {
+        ZStack {
+            TextField("", text: $locationSearch)
+                .multilineTextAlignment(.center)
+                .frame(width: 175, height: 50, alignment: .center)
+                .background(K.color.button.buttonColor.opacity(0.8))
+                .foregroundColor(K.color.button.buttonTextColor)
+                .cornerRadius(30)
+            Text("Search").foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+            Image(systemName: "magnifyingglass").offset(x: 50).foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+        }.offset(y:-275)
+            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local)
+                .onEnded({ value in
+                    if value.translation.height < 0 {// searchBarShowing.toggle()
+                        
+                    }}))
     }
 }
