@@ -45,6 +45,82 @@ class AuthenticViewModel: ObservableObject{
             }
     }
     
+    func userInfo(name: String){
+        
+        guard let user = Auth.auth().currentUser else{
+            return
+        }
+        
+
+        
+        let changeRequest = user.createProfileChangeRequest()
+        changeRequest.displayName = name
+        
+        changeRequest.commitChanges { error in
+            if error == nil{
+                print("changes have been made")
+            }
+        
+        
+        
+        }
+        
+    }
+    
+    func uploadUserProfilePicture(with image: UIImage ){
+        print("UPLOAD USER PROFILE PICTURE HAS STARTED")
+        
+        
+        Auth.auth().addStateDidChangeListener { auth, user in
+          // ...
+            guard let user = user else{
+                print("Still no user is found")
+                return
+            }
+        
+        //Where in firebase it will be stored
+        let storageRef = Storage.storage().reference().child("user/\(user.uid)")
+        
+        //Image -> Data
+        guard let compressedImage = image.jpegData(compressionQuality: 0.75) else{
+            
+            print("FAILED TO COMPRESS")
+            return
+        }
+        
+        //Type of Data being stored
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        
+        //Stores the data (the image) as a image/jpeg in the firebase storage
+        storageRef.putData(compressedImage, metadata: metaData) { metaData, error in
+            if error == nil, metaData != nil{
+                
+                print("Image stored sucessfully")
+                
+                storageRef.downloadURL{ url, error in
+                  //  completion(url)
+                    
+                    let changeRequest = user.createProfileChangeRequest()
+                   // changeRequest.displayName = self.userNameTextField.text ?? "User"
+                    changeRequest.photoURL = url
+                    
+                    changeRequest.commitChanges { error in
+                        if error == nil{
+                            print("changes have been made")
+                        }
+                    }
+                }
+            }else{
+                print(error?.localizedDescription)
+                print("Upload fail")
+            }
+        }}
+        
+        
+        
+    }
+    
     
     //Send reset request
     func resetUserPassword(_ email: String){

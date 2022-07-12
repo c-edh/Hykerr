@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SignUpView: View {
     
+    @State private var name: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var passwordCheck: String = ""
@@ -40,8 +41,8 @@ struct SignUpView: View {
             
             Form{
               
+                TextField("Enter Name", text: $name).disableAutocorrection(true)
             
-                
                 TextField("Enter Email",
                           text: $email).disableAutocorrection(true).textInputAutocapitalization(.never)
                 
@@ -61,7 +62,7 @@ struct SignUpView: View {
                 
                 
             }.frame(
-                width: 350, height: 325, alignment: .center).cornerRadius(40)
+                width: 350, height: 350, alignment: .center).cornerRadius(40)
             .background()
             
             if showUserHint == true{
@@ -70,7 +71,8 @@ struct SignUpView: View {
             Button("Sign Up"){
                 if (password == passwordCheck){
                     authenticViewModel.createUserAccount(email: email, password: password)
-                    
+                    authenticViewModel.uploadUserProfilePicture(with: profileImage)
+                    authenticViewModel.userInfo(name: name)
                     //Take user to the next screen
                     
                 }else{

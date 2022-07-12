@@ -9,7 +9,6 @@ import SwiftUI
 import CoreLocation
 import MapKit
 import CoreLocationUI
-import Firebase
 
 
 
@@ -31,23 +30,18 @@ struct MainView: View {
                 //TODO Add sliding animation to dismiss searchbar
                 
                 if searchBarShowing == true{
-                    SearchBarField(locationSearch: $locationSearch)
+                    SearchBarField(locationSearch: $locationSearch , toggleSearch: toggleSearch).transition(.move(edge: .top))
                 }
-               
-                else{
-                    EmptyView()
-                        .frame(width: 220, height: 30, alignment: .center)
-                        .background(.black).offset(y:-300)
-                        .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local).onEnded({ value in
-                            if value.translation.height > 0{ searchBarShowing.toggle() }}))
-                    }
+               //Make a way so user can swipe search back down
             
 
                     
                        
                 //Max needs to be in corner, needs to be higher on iphone 8
                 Button("Record"){
-                    self.menuOpened.toggle()
+//                    self.menuOpened.toggle()
+                    viewModel.saveUserLocations()
+                    print("Should have sent location, check")
                 }
                 .frame(width: 100, height: 100, alignment: .center)
                 .shadow(color: .black, radius: 10.0)
@@ -80,6 +74,9 @@ struct MainView: View {
         }
 
         
+    }
+    func toggleSearch(){
+        searchBarShowing.toggle()
     }
     
     func toggleMenu(){
@@ -143,8 +140,8 @@ struct MenuContent: View{
         MenuItem(text: "Settings", symbol: "gearshape.fill"),
     ]
     
-    @State var userName = "Name"
     @EnvironmentObject var authenticViewModel : AuthenticViewModel
+    @StateObject var mainViewModel = MainViewModel()
 
     var body: some View{
         
@@ -153,14 +150,20 @@ struct MenuContent: View{
            
             VStack(alignment: .leading, spacing: 0){
                 
-                Image(systemName: "person.circle")
+                Image(uiImage:mainViewModel.profileImage)
                     .resizable().frame(width: 100, height: 100, alignment: .center)
+                    .cornerRadius(100)
+                    .shadow(color: .black, radius: 2, y:3)
                     .padding(.top, 40)
-                    .foregroundColor(K.color.Text.textColor)
+                    .foregroundColor(K.color.Text.textColor).onAppear{
+                        mainViewModel.getUserPicture()
+                    }
                 
-                Text(userName)
+                Text(mainViewModel.userName)
                     .foregroundColor(K.color.Text.textColor).fontWeight(.heavy)
-                    .frame(width:100,alignment:.center).padding(.top,25)
+                    .frame(width:100,alignment:.center).padding(.top,25).onAppear{
+                        mainViewModel.getUserName()
+                    }
 
                 ForEach(items){item in
                     
@@ -205,7 +208,7 @@ struct MenuContent: View{
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         
-        MainView().environmentObject(AuthenticViewModel())
+        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel())
         
     }
 }
@@ -213,6 +216,10 @@ struct MainView_Previews: PreviewProvider {
 struct SearchBarField: View {
     
     @Binding var locationSearch: String
+    @State var searchBarY : CGFloat = -275
+    let toggleSearch: () -> Void
+
+    
     var body: some View {
         ZStack {
             TextField("", text: $locationSearch)
@@ -223,10 +230,18 @@ struct SearchBarField: View {
                 .cornerRadius(30)
             Text("Search").foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
             Image(systemName: "magnifyingglass").offset(x: 50).foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
-        }.offset(y:-275)
+        }.offset(y:searchBarY).ignoresSafeArea(.keyboard)
             .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local)
+                
+                .onChanged({ value in
+                    if searchBarY > -300 && searchBarY < -249 {
+                        searchBarY += value.translation.height
+                        print(searchBarY)
+                    }})
+                
                 .onEnded({ value in
-                    if value.translation.height < 0 {// searchBarShowing.toggle()
+                    if value.translation.height < 0 {
+                        self.toggleSearch()
                         
                     }}))
     }
