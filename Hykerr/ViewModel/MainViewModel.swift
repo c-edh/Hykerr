@@ -7,21 +7,22 @@
 
 import MapKit
 import Firebase
+import SwiftUI
 
 
 final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     
     private var db = Firestore.firestore()
     
-    private var coordsInTrip = LinkedList(0)
+     var coordsInTrip = LinkedList(0)
     
+    @Published var path : MKPolyline?
     @Published var profileImage = UIImage(systemName: "person.circle")!
     @Published var userName = "User"
-
+    @Published var currentLocation = CLLocationCoordinate2D(latitude: 37.334_900, longitude: -122.009_020)
     
     @Published var region = MKCoordinateRegion(
-           center: CLLocationCoordinate2D(latitude: 37.334_900,
-                                          longitude: -122.009_020),
+           center: CLLocationCoordinate2D(latitude: 37.334_900, longitude: -122.009_020),
            latitudinalMeters: 750,
            longitudinalMeters: 750
        )
@@ -69,10 +70,11 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         guard let location = locationManager?.location?.coordinate else{
             return
         }
+   //     currentLocation = location
         
         //Adds coords to the linkedList
         coordsInTrip.append(location)
-        
+        updatePath()
         userLocationToFirebase(upload: location)
     }
     
@@ -81,12 +83,15 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     func userLocationToFirebase(upload location : CLLocationCoordinate2D){
         //Get userid -> Pick Up Location, and Last know location (update every 10 seconds?) and Time intervels
         
+        
+        
         //REGION GETS THE MAP CENTER, If user moves it wont get their location
+        
         
         guard let user = Auth.auth().currentUser else{
             return
         }
-  
+        
         
         db.collection(user.uid).document("currentTrip").setData(
             
@@ -152,4 +157,98 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     }
     
     
+    func updatePath(){
+        print(coordsInTrip.printList())
+        path = MKPolyline(coordinates: coordsInTrip.mapPath(), count: coordsInTrip.mapPath().count)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self.updatePath()
+            
+        }
+    }
+    
+
+    
+    
 }
+
+//MARK: - MapView
+
+struct mapView: UIViewRepresentable{
+    func makeCoordinator() -> Coordinator {
+        return mapView.Coordinator()
+    }
+    
+    
+    //@Binding var region : MKCoordinateRegion
+    @Binding var currentLocation: CLLocationCoordinate2D
+
+    @Binding var path : MKPolyline?
+    let mapViewDelegate = Coordinator()
+
+    
+    func makeUIView(context: Context) -> MKMapView {
+        let map = MKMapView()
+        
+        let region = MKCoordinateRegion(
+            center: currentLocation,
+            latitudinalMeters: 750,
+            longitudinalMeters: 750
+        )
+        
+        map.region = region
+        
+        
+        return map
+    }
+    
+    func updateUIView(_ uiView: MKMapView, context: Context) {
+        uiView.delegate = mapViewDelegate
+        uiView.showsUserLocation = true
+        uiView.setCenter(currentLocation, animated: true)
+        addPath(to: uiView)
+        //
+        
+    }
+    
+    func addPath(to map : MKMapView){
+        print("this updated")
+        
+//        if !map.overlays.isEmpty{
+//            map.removeOverlays(map.overlays)
+//        }
+        
+        guard let path = path else{
+            print("Path failed")
+            return
+        }
+        map.setVisibleMapRect(path.boundingMapRect, animated: true)
+        map.addOverlay(path, level: .aboveRoads)
+
+        
+    }
+    
+class Coordinator : NSObject,MKMapViewDelegate{
+    
+    
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer{
+       
+        let render = MKPolylineRenderer(overlay: overlay)
+        render.strokeColor = .black
+        render.lineCap = .round
+        render.lineWidth = 3.0
+        return render
+    }
+    
+    func mapViewDidChangeVisibleRegion(_ mapView: MKMapView) {
+
+         }
+    
+
+
+    
+}
+    
+    
+    
+}
+

@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreLocation
-import MapKit
+//import MapKit
 import CoreLocationUI
 
 
@@ -23,14 +23,22 @@ struct MainView: View {
     var body: some View {
         NavigationView{
             ZStack{
-                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
-                    viewModel.checkIfLocationServiceIsEnabled()
-                }
+                //UIVIEWRepresentable
+                mapView(currentLocation: $viewModel.currentLocation, path: $viewModel.path)
+                    .border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
+                                        viewModel.checkIfLocationServiceIsEnabled()
+                                    }
+                
+                    //SWIFTUI Map View
+//                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
+//                    viewModel.checkIfLocationServiceIsEnabled()
+//                }
                 
                 //TODO Add sliding animation to dismiss searchbar
                 
                 if searchBarShowing == true{
-                    SearchBarField(locationSearch: $locationSearch , toggleSearch: toggleSearch).transition(.move(edge: .top))
+                    SearchBarField(
+                        locationSearch: $locationSearch , toggleSearch: toggleSearch).transition(.move(edge: .top))
                 }
                //Make a way so user can swipe search back down
             
@@ -40,6 +48,7 @@ struct MainView: View {
                 //Max needs to be in corner, needs to be higher on iphone 8
                 Button("Record"){
 //                    self.menuOpened.toggle()
+                    RecordInfoView()
                     viewModel.saveUserLocations()
                     print("Should have sent location, check")
                 }
@@ -53,7 +62,7 @@ struct MainView: View {
                              menuOpened: menuOpened,
                              toggleMenu: toggleMenu)
                 
-            }
+            }.ignoresSafeArea(.keyboard)
         
             .navigationTitle(menuOpened ? "": "Hykerr")
             .toolbar{
@@ -83,6 +92,9 @@ struct MainView: View {
         menuOpened.toggle()
     }
 }
+
+
+
 
 
 
@@ -207,7 +219,7 @@ struct MenuContent: View{
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-        
+       // RecordInfoView()
         MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel())
         
     }
@@ -230,7 +242,7 @@ struct SearchBarField: View {
                 .cornerRadius(30)
             Text("Search").foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
             Image(systemName: "magnifyingglass").offset(x: 50).foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
-        }.offset(y:searchBarY).ignoresSafeArea(.keyboard)
+        }.offset(y:searchBarY)
             .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local)
                 
                 .onChanged({ value in
@@ -246,3 +258,35 @@ struct SearchBarField: View {
                     }}))
     }
 }
+
+struct RecordInfoView: View {
+    
+    @State var stateLicenese = ""
+    @State var carLicenses = ""
+    
+    var body: some View {
+        VStack{
+            
+            Text("Driver's Information")
+            
+            HStack{
+              
+                TextField("State",text: $stateLicenese).frame(width: 75, alignment: .center).textFieldStyle(.roundedBorder)
+                
+                TextField("Car's License", text: $carLicenses).textFieldStyle(.roundedBorder)
+            
+            }.padding(20)
+            
+            Button("Submit"){
+                print("test")
+            }.frame(width: 200, height: 50, alignment: .center)
+                .foregroundColor(K.color.button.buttonTextColor).background(K.color.button.buttonColor)
+                .cornerRadius(100).padding()
+            
+        }.frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height/4, alignment: .center)
+            .background(.white)
+            .border(.black).offset(y:UIScreen.main.bounds.height/4)
+        
+    }
+}
+
