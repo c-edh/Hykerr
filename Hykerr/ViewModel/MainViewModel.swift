@@ -202,8 +202,16 @@ struct mapView: UIViewRepresentable{
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        
+        let region = MKCoordinateRegion(
+            center: currentLocation,
+            latitudinalMeters: 750,
+            longitudinalMeters: 750
+        )
+        
         uiView.delegate = mapViewDelegate
         uiView.showsUserLocation = true
+        uiView.region = region
         uiView.setCenter(currentLocation, animated: true)
         addPath(to: uiView)
         //
@@ -221,7 +229,7 @@ struct mapView: UIViewRepresentable{
             print("Path failed")
             return
         }
-        map.setVisibleMapRect(path.boundingMapRect, animated: true)
+        //map.setVisibleMapRect(path.boundingMapRect, animated: true)
         map.addOverlay(path, level: .aboveRoads)
 
         

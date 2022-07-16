@@ -19,6 +19,7 @@ struct MainView: View {
     @State var menuOpened = false
     @State var locationSearch = ""
     @State var searchBarShowing = true
+    @State private var recordInfoOpen = false
     
     var body: some View {
         NavigationView{
@@ -28,11 +29,6 @@ struct MainView: View {
                     .border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
                                         viewModel.checkIfLocationServiceIsEnabled()
                                     }
-                
-                    //SWIFTUI Map View
-//                Map(coordinateRegion: $viewModel.region,showsUserLocation: true).border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
-//                    viewModel.checkIfLocationServiceIsEnabled()
-//                }
                 
                 //TODO Add sliding animation to dismiss searchbar
                 
@@ -48,8 +44,8 @@ struct MainView: View {
                 //Max needs to be in corner, needs to be higher on iphone 8
                 Button("Record"){
 //                    self.menuOpened.toggle()
-                    RecordInfoView()
-                    viewModel.saveUserLocations()
+                    recordInfoOpen.toggle()
+                    //viewModel.saveUserLocations()
                     print("Should have sent location, check")
                 }
                 .frame(width: 100, height: 100, alignment: .center)
@@ -57,6 +53,11 @@ struct MainView: View {
                 .background(K.color.button.buttonColor.opacity(0.8)).foregroundColor(K.color.button.buttonTextColor)
                 .cornerRadius(100)
                 .offset(x: 125, y: 240)
+                
+          
+                
+                RecordInfoView(toggleRecordMenu: $recordInfoOpen)
+            
                     
                 SideMenu(width: UIScreen.main.bounds.width/1.5,
                              menuOpened: menuOpened,
@@ -91,6 +92,7 @@ struct MainView: View {
     func toggleMenu(){
         menuOpened.toggle()
     }
+    
 }
 
 
@@ -212,18 +214,7 @@ struct MenuContent: View{
     }
 }
 
-
-
-
-
-
-struct MainView_Previews: PreviewProvider {
-    static var previews: some View {
-       // RecordInfoView()
-        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel())
-        
-    }
-}
+//MARK: - Search Bar
 
 struct SearchBarField: View {
     
@@ -259,12 +250,17 @@ struct SearchBarField: View {
     }
 }
 
+//MARK: - Record Info (Place to Record Drivers info)
+
 struct RecordInfoView: View {
+    
+    @Binding var toggleRecordMenu : Bool
     
     @State var stateLicenese = ""
     @State var carLicenses = ""
     
     var body: some View {
+        if toggleRecordMenu{
         VStack{
             
             Text("Driver's Information")
@@ -278,6 +274,7 @@ struct RecordInfoView: View {
             }.padding(20)
             
             Button("Submit"){
+                toggleRecordMenu.toggle()
                 print("test")
             }.frame(width: 200, height: 50, alignment: .center)
                 .foregroundColor(K.color.button.buttonTextColor).background(K.color.button.buttonColor)
@@ -287,6 +284,18 @@ struct RecordInfoView: View {
             .background(.white)
             .border(.black).offset(y:UIScreen.main.bounds.height/4)
         
+        }
+        
     }
 }
 
+
+//MARK: - Preview
+
+struct MainView_Previews: PreviewProvider {
+    static var previews: some View {
+       // RecordInfoView()
+        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel())
+        
+    }
+}
