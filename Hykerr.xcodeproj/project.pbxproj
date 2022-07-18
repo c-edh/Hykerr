@@ -103,7 +103,7 @@
 				F4AE8A67287CC44E00E9078B /* Model */,
 				F4010474287376C200348851 /* HykerrApp.swift */,
 				F44DF0B228755DB200433D5B /* AccountManager.swift */,
-				F4AE8A6A287CC49100E9078B /* New Group */,
+				F4AE8A6A287CC49100E9078B /* Models */,
 				F4B784B62877A423001707A2 /* ViewModel */,
 				F401048E28739D6E00348851 /* View */,
 				F4010478287376C300348851 /* Assets.xcassets */,
@@ -143,13 +143,13 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		F4AE8A6A287CC49100E9078B /* New Group */ = {
+		F4AE8A6A287CC49100E9078B /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				F4CE7AA42878D297008703E7 /* PhotoPicker.swift */,
 				F4AE8A68287CC47D00E9078B /* LinkedList.swift */,
 			);
-			path = "New Group";
+			path = Models;
 			sourceTree = "<group>";
 		};
 		F4B784B62877A423001707A2 /* ViewModel */ = {

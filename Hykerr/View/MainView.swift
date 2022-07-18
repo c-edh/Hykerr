@@ -43,9 +43,8 @@ struct MainView: View {
                        
                 //Max needs to be in corner, needs to be higher on iphone 8
                 Button("Record"){
-//                    self.menuOpened.toggle()
-                    recordInfoOpen.toggle()
-                    //viewModel.saveUserLocations()
+//                    withAnimation(.spring(dampingFraction: 0.5).speed(3)){}
+                        recordInfoOpen.toggle()
                     print("Should have sent location, check")
                 }
                 .frame(width: 100, height: 100, alignment: .center)
@@ -56,7 +55,7 @@ struct MainView: View {
                 
           
                 
-                RecordInfoView(toggleRecordMenu: $recordInfoOpen)
+                RecordInfoView(toggleRecordMenu: $recordInfoOpen, viewModel: viewModel)
             
                     
                 SideMenu(width: UIScreen.main.bounds.width/1.5,
@@ -69,11 +68,10 @@ struct MainView: View {
             .toolbar{
                 ToolbarItem(placement: .navigationBarLeading){
                     if !menuOpened{
-                        Button(action: {
-                            menuOpened.toggle()
-                        }, label: {
-                            Image(systemName: "line.3.horizontal").foregroundColor(K.color.button.buttonColor)
-                        })
+                        Button(
+                            action: { menuOpened.toggle()},
+                            label: { Image(systemName: "line.3.horizontal").foregroundColor(K.color.button.buttonColor)}
+                        )
                         
                     }
 
@@ -151,7 +149,8 @@ struct MenuContent: View{
     
   //  let userProfilePicture: Image?
     let items : [MenuItem] = [
-        MenuItem(text: "Settings", symbol: "gearshape.fill"),
+        MenuItem(text: "Trip History", symbol: "clock.arrow.circlepath"),
+        MenuItem(text: "Settings", symbol: "gearshape"),
     ]
     
     @EnvironmentObject var authenticViewModel : AuthenticViewModel
@@ -162,7 +161,7 @@ struct MenuContent: View{
         ZStack{
             Color(UIColor.systemBackground)
            
-            VStack(alignment: .leading, spacing: 0){
+            VStack(alignment: .center, spacing: 0){
                 
                 Image(uiImage:mainViewModel.profileImage)
                     .resizable().frame(width: 100, height: 100, alignment: .center)
@@ -174,11 +173,13 @@ struct MenuContent: View{
                     }
                 
                 Text(mainViewModel.userName)
-                    .foregroundColor(K.color.Text.textColor).fontWeight(.heavy)
+                    .foregroundColor(K.color.Text.textColor).font(.system(size: 22)).fontWeight(.heavy)
                     .frame(width:100,alignment:.center).padding(.top,25).onAppear{
                         mainViewModel.getUserName()
                     }
 
+                Divider().foregroundColor(.black).padding()
+                
                 ForEach(items){item in
                     
                     HStack{
@@ -197,11 +198,10 @@ struct MenuContent: View{
                         
                         Spacer()
                     }
-                    
-                    Divider().border(.black, width: 3)
+//                    Divider()
                 }.padding(.top,20)
                 
-            }.padding().offset(x:50,y:-250)
+            }.padding().offset(y:-250)
             
             Button("Logout"){authenticViewModel.logOut()}
                 .font(.body.bold())
@@ -225,28 +225,33 @@ struct SearchBarField: View {
     
     var body: some View {
         ZStack {
+            
             TextField("", text: $locationSearch)
                 .multilineTextAlignment(.center)
                 .frame(width: 175, height: 50, alignment: .center)
                 .background(K.color.button.buttonColor.opacity(0.8))
                 .foregroundColor(K.color.button.buttonTextColor)
                 .cornerRadius(30)
-            Text("Search").foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+            
+            Text("Search")
+                .foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+            
             Image(systemName: "magnifyingglass").offset(x: 50).foregroundColor(K.color.button.buttonTextColor.opacity(0.8))
+        
         }.offset(y:searchBarY)
             .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local)
-                
                 .onChanged({ value in
                     if searchBarY > -300 && searchBarY < -249 {
                         searchBarY += value.translation.height
                         print(searchBarY)
-                    }})
-                
+                    }
+                })
                 .onEnded({ value in
                     if value.translation.height < 0 {
                         self.toggleSearch()
-                        
-                    }}))
+                        }
+                })
+            )
     }
 }
 
@@ -255,35 +260,50 @@ struct SearchBarField: View {
 struct RecordInfoView: View {
     
     @Binding var toggleRecordMenu : Bool
-    
+    @State var viewModel: MainViewModel
     @State var stateLicenese = ""
     @State var carLicenses = ""
     
     var body: some View {
+        
         if toggleRecordMenu{
+            
         VStack{
             
             Text("Driver's Information")
             
             HStack{
               
-                TextField("State",text: $stateLicenese).frame(width: 75, alignment: .center).textFieldStyle(.roundedBorder)
+                TextField("State",text: $stateLicenese)
+                    .frame(width: 75, alignment: .center)
+                    .textFieldStyle(.roundedBorder)
                 
-                TextField("Car's License", text: $carLicenses).textFieldStyle(.roundedBorder)
+                TextField("Car's License", text: $carLicenses)
+                    .textFieldStyle(.roundedBorder)
             
             }.padding(20)
+                .shadow(color: .black, radius: 1.0)
             
             Button("Submit"){
-                toggleRecordMenu.toggle()
+                withAnimation(
+                    .easeIn(duration: 4)){
+                        toggleRecordMenu.toggle()
+                        viewModel.userTripInfoToFirebase(state: stateLicenese, license: carLicenses)
+                    }
+                
                 print("test")
             }.frame(width: 200, height: 50, alignment: .center)
-                .foregroundColor(K.color.button.buttonTextColor).background(K.color.button.buttonColor)
+                .foregroundColor(K.color.button.buttonTextColor)
+                .background(K.color.button.buttonColor)
                 .cornerRadius(100).padding()
             
         }.frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height/4, alignment: .center)
-            .background(.white)
-            .border(.black).offset(y:UIScreen.main.bounds.height/4)
-        
+            .background(Color(UIColor.systemBackground))
+            .cornerRadius(20)
+            .offset(y:UIScreen.main.bounds.height/3)
+            .compositingGroup()
+            .shadow(color: .black, radius: 10)
+       
         }
         
     }
@@ -294,8 +314,11 @@ struct RecordInfoView: View {
 
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
-       // RecordInfoView()
-        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel())
+//        RecordInfoView(toggleRecordMenu: true)
+        
+        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel()).preferredColorScheme(.light)
+        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel()).preferredColorScheme(.dark)
+        
         
     }
 }

@@ -16,6 +16,8 @@ class AuthenticViewModel: ObservableObject{
         
     }
     
+  //MARK: - Login to Account
+    
     // Login User
     func loginUser(email: String, password: String){
         
@@ -30,8 +32,23 @@ class AuthenticViewModel: ObservableObject{
             }
     }
     
+    //Send reset request
+    func resetUserPassword(_ email: String){
+        //TODO set up reset password func
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let e = error{
+                print(e.localizedDescription)
+                
+            }else{
+                print("success")
+            }
+            
+        }
+    }
+    
+//MARK: - Create Account
+    
     func createUserAccount(email: String, password: String){
-        
             Auth.auth().createUser(withEmail: email, password: password) {[weak self] authResult, error in
                 if let e = error{
                     print(e.localizedDescription)
@@ -44,6 +61,7 @@ class AuthenticViewModel: ObservableObject{
                 }
             }
     }
+    
     
     func userInfo(name: String){
         
@@ -66,7 +84,7 @@ class AuthenticViewModel: ObservableObject{
         }
         
     }
-    
+        
     func uploadUserProfilePicture(with image: UIImage ){
         print("UPLOAD USER PROFILE PICTURE HAS STARTED")
         
@@ -122,19 +140,7 @@ class AuthenticViewModel: ObservableObject{
     }
     
     
-    //Send reset request
-    func resetUserPassword(_ email: String){
-        //TODO set up reset password func
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let e = error{
-                print(e.localizedDescription)
-                
-            }else{
-                print("success")
-            }
-            
-        }
-    }
+//MARK: - LogOut
     
     func logOut(){
         let firebaseAuth = Auth.auth()

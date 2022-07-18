@@ -9,7 +9,8 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @State private var name: String = ""
+    @State private var firstName: String = ""
+    @State private var lastName: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var passwordCheck: String = ""
@@ -40,8 +41,18 @@ struct SignUpView: View {
 
             
             Form{
+                HStack{
               
-                TextField("Enter Name", text: $name).disableAutocorrection(true)
+                    TextField("First Name", text: $firstName)
+                        .disableAutocorrection(true)
+                        .minimumScaleFactor(0.5)
+                    
+                    Divider()
+                    
+                    TextField("Last Name", text:$lastName)
+                        .disableAutocorrection(true)
+                        .minimumScaleFactor(0.5)
+                }
             
                 TextField("Enter Email",
                           text: $email).disableAutocorrection(true).textInputAutocapitalization(.never)
@@ -72,7 +83,7 @@ struct SignUpView: View {
                 if (password == passwordCheck){
                     authenticViewModel.createUserAccount(email: email, password: password)
                     authenticViewModel.uploadUserProfilePicture(with: profileImage)
-                    authenticViewModel.userInfo(name: name)
+                    authenticViewModel.userInfo(name: firstName)
                     //Take user to the next screen
                     
                 }else{

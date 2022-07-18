@@ -65,39 +65,35 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         
     }
     
-    func saveUserLocations(){
+    private func saveUserLocations(){
         
         guard let location = locationManager?.location?.coordinate else{
             return
         }
-   //     currentLocation = location
         
         //Adds coords to the linkedList
         coordsInTrip.append(location)
+        userTripInfoToFirebase(current: location)
+
+        //Map
         updatePath()
-        userLocationToFirebase(upload: location)
+
     }
     
     
     
-    func userLocationToFirebase(upload location : CLLocationCoordinate2D){
-        //Get userid -> Pick Up Location, and Last know location (update every 10 seconds?) and Time intervels
-        
-        
-        
-        //REGION GETS THE MAP CENTER, If user moves it wont get their location
-        
+    func userTripInfoToFirebase(current location : CLLocationCoordinate2D){
         
         guard let user = Auth.auth().currentUser else{
             return
         }
         
-        
-        db.collection(user.uid).document("currentTrip").setData(
+        let locationInfo = ["lat": location.latitude, "long": location.longitude]
+                
+        db.collection(user.uid).document("Trips").updateData(
             
             //Last Updated Location
-            ["location" : ["lat": location.latitude,
-                           "long": location.longitude]
+            ["Trip.Last Location":locationInfo
 
                 ]){
                     (error) in
@@ -114,6 +110,48 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         }
 
     }
+    
+    func userTripInfoToFirebase(state: String, license: String){
+        
+        guard let user = Auth.auth().currentUser else{
+            return
+        }
+        
+        guard let startLocation = locationManager?.location?.coordinate else{
+            return
+        }
+        
+        coordsInTrip.append(startLocation)
+
+        
+        let carInfo = ["State":state, "License": license]
+        let locationInfo = ["lat": startLocation.latitude, "long": startLocation.longitude]
+
+        //Firebase firestore database
+        db.collection(user.uid).document("Trips").setData(
+            ["Trip":[
+                    "Car Info" : carInfo,
+                    "Starting Location" : locationInfo,
+                    "Last Location" : locationInfo
+                    ]
+
+                ]){
+                    (error) in
+                    if let e = error{
+                        print(e)
+                    }
+                    else{
+                        print("Sent Sucessful")
+                    }
+                }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            self.saveUserLocations()
+        }
+
+    }
+    
+
     
     func getUserPicture(){
         //Only works after the user sign up they exit the app and reopen it
@@ -137,6 +175,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             }
         }
     }
+    
     
     func getUserName(){
         
