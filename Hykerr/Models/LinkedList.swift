@@ -38,7 +38,7 @@ class LinkedList{
         
     }
     
-    func tranverseToIndex(_ index: Int) -> Any{
+    func tranverseToIndex(_ index: Int) -> Node{
         var i = 1
         var goTo = index
         if index > self.length{

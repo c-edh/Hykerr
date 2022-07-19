@@ -25,9 +25,10 @@ struct MainView: View {
         NavigationView{
             ZStack{
                 //UIVIEWRepresentable
-                mapView(currentLocation: $viewModel.currentLocation, path: $viewModel.path)
+                mapView(coordsInTrip: $viewModel.coordsInTrip, path: $viewModel.path)
                     .border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
                                         viewModel.checkIfLocationServiceIsEnabled()
+                
                                     }
                 
                 //TODO Add sliding animation to dismiss searchbar
@@ -42,7 +43,7 @@ struct MainView: View {
                     
                        
                 //Max needs to be in corner, needs to be higher on iphone 8
-                Button("Record"){
+                Button(recordInfoOpen ? "End" : "Record"){
 //                    withAnimation(.spring(dampingFraction: 0.5).speed(3)){}
                         recordInfoOpen.toggle()
                     print("Should have sent location, check")
@@ -219,7 +220,7 @@ struct MenuContent: View{
 struct SearchBarField: View {
     
     @Binding var locationSearch: String
-    @State var searchBarY : CGFloat = -275
+    @State private var searchBarY : CGFloat = -275
     let toggleSearch: () -> Void
 
     
@@ -264,25 +265,55 @@ struct RecordInfoView: View {
     @State var stateLicenese = ""
     @State var carLicenses = ""
     
+   // @State private var recordInfoY : CGFloat = UIScreen.main.bounds.height/3
+
+    
     var body: some View {
         
         if toggleRecordMenu{
+            GeometryReader{ _ in
+                EmptyView()
+            }.background(Color.gray.opacity(0.5))
+                .opacity(self.toggleRecordMenu ? 1: 0)
+                .animation(Animation.easeIn(duration: 0.5))
+                .onTapGesture {
+                    withAnimation(Animation.easeIn(duration: 0.5)) {}
+                    toggleRecordMenu.toggle()
+                }
             
         VStack{
             
-            Text("Driver's Information")
+            Text("Driver's Information").font(.title)
             
             HStack{
-              
+              Spacer()
                 TextField("State",text: $stateLicenese)
                     .frame(width: 75, alignment: .center)
                     .textFieldStyle(.roundedBorder)
+                    .shadow(color: .black, radius: 1.0)
+
                 
                 TextField("Car's License", text: $carLicenses)
                     .textFieldStyle(.roundedBorder)
+                    .shadow(color: .black, radius: 1.0)
+
+                
+                Button(
+                    action:{
+                            print("Place holder")
+                        
+                    },
+                       
+                    label:{
+                            Image(systemName: "camera.viewfinder")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width:30)
+                    })
+                Spacer()
             
-            }.padding(20)
-                .shadow(color: .black, radius: 1.0)
+            }
+            //.padding(20)
             
             Button("Submit"){
                 withAnimation(
@@ -297,13 +328,27 @@ struct RecordInfoView: View {
                 .background(K.color.button.buttonColor)
                 .cornerRadius(100).padding()
             
-        }.frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height/4, alignment: .center)
+        }.frame(width: UIScreen.main.bounds.width , height: UIScreen.main.bounds.height/3, alignment: .center)
+               
             .background(Color(UIColor.systemBackground))
             .cornerRadius(20)
-            .offset(y:UIScreen.main.bounds.height/3)
+            .offset(y: UIScreen.main.bounds.height/3)
             .compositingGroup()
             .shadow(color: .black, radius: 10)
-       
+//            .gesture(DragGesture(minimumDistance: 20, coordinateSpace: .local)
+//                .onChanged({ value in
+//                    if recordInfoY <= UIScreen.main.bounds.height/3{
+//                        recordInfoY+=value.translation.height
+//                    }
+//
+//                   print(value)
+//                })
+//                    .onEnded({ _ in
+//                        toggleRecordMenu.toggle()
+//
+//                    })
+//            )
+//
         }
         
     }
