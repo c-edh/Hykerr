@@ -52,13 +52,14 @@ class LinkedList{
         return currentNode
     }
     
-    func printList() -> [Any]{
-        var printArray = [Any]()
+    func printList() -> [[String:String]]{
+        var printArray = [[String:String]]()
         var currentNode = self.head
         var i = 0
         
         while(i<self.length-1){
-            printArray.append(currentNode.value)
+            printArray.append(["Long": String((currentNode.value as! CLLocationCoordinate2D).longitude),
+                               "Lat": String((currentNode.value as! CLLocationCoordinate2D).latitude)])
             currentNode = currentNode.next!
             i+=1
         }

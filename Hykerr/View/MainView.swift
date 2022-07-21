@@ -19,13 +19,12 @@ struct MainView: View {
     @State var menuOpened = false
     @State var locationSearch = ""
     @State var searchBarShowing = true
-    @State private var recordInfoOpen = false
     
     var body: some View {
         NavigationView{
             ZStack{
                 //UIVIEWRepresentable
-                mapView(coordsInTrip: $viewModel.coordsInTrip, path: $viewModel.path)
+                mapView(coordsInTrip: $viewModel.coordsInTrip)
                     .border(K.color.button.buttonColor).ignoresSafeArea(edges: .bottom).accentColor(K.color.button.buttonColor).onAppear{
                                         viewModel.checkIfLocationServiceIsEnabled()
                 
@@ -43,20 +42,10 @@ struct MainView: View {
                     
                        
                 //Max needs to be in corner, needs to be higher on iphone 8
-                Button(recordInfoOpen ? "End" : "Record"){
-//                    withAnimation(.spring(dampingFraction: 0.5).speed(3)){}
-                        recordInfoOpen.toggle()
-                    print("Should have sent location, check")
-                }
-                .frame(width: 100, height: 100, alignment: .center)
-                .shadow(color: .black, radius: 10.0)
-                .background(K.color.button.buttonColor.opacity(0.8)).foregroundColor(K.color.button.buttonTextColor)
-                .cornerRadius(100)
-                .offset(x: 125, y: 240)
+              
+        
                 
-          
-                
-                RecordInfoView(toggleRecordMenu: $recordInfoOpen, viewModel: viewModel)
+                RecordInfoView(viewModel: viewModel)
             
                     
                 SideMenu(width: UIScreen.main.bounds.width/1.5,
@@ -150,6 +139,7 @@ struct MenuContent: View{
     
   //  let userProfilePicture: Image?
     let items : [MenuItem] = [
+        MenuItem(text:"Home", symbol: "house.circle"),
         MenuItem(text: "Trip History", symbol: "clock.arrow.circlepath"),
         MenuItem(text: "Settings", symbol: "gearshape"),
     ]
@@ -260,25 +250,55 @@ struct SearchBarField: View {
 
 struct RecordInfoView: View {
     
-    @Binding var toggleRecordMenu : Bool
     @State var viewModel: MainViewModel
     @State var stateLicenese = ""
     @State var carLicenses = ""
+    
+    @State private var recordInfoOpen = false
+    @State private var tripStart = false
+
     
    // @State private var recordInfoY : CGFloat = UIScreen.main.bounds.height/3
 
     
     var body: some View {
+        Button(tripStart ? "End" : "Record"){
+//                    withAnimation(.spring(dampingFraction: 0.5).speed(3)){}
+            if tripStart == false{
+                recordInfoOpen.toggle()
+            }
+            else{
+                tripStart.toggle()
+//                print("This should have shown state and car: ",stateLicenese, carLicenses)
+                viewModel.userSaveTripInfoToFirebase(state: stateLicenese, license: carLicenses)
+
+            }
+            print("Should have sent location, check")
+        }
+        .frame(width: 100, height: 100, alignment: .center)
+        .shadow(color: .black, radius: 10.0)
+        .background(K.color.button.buttonColor.opacity(0.8)).foregroundColor(K.color.button.buttonTextColor)
+        .cornerRadius(100)
+        .offset(x: 125, y: 240)
         
-        if toggleRecordMenu{
+        if tripStart == true{
+            Button("Emergency"){
+                //Inform Emergency Contact
+                
+            }.frame(width:100,height:100, alignment: .center).cornerRadius(100).offset(y: 240)
+            
+        }
+        
+        
+        if recordInfoOpen{
             GeometryReader{ _ in
                 EmptyView()
             }.background(Color.gray.opacity(0.5))
-                .opacity(self.toggleRecordMenu ? 1: 0)
+                .opacity(recordInfoOpen ? 1: 0)
                 .animation(Animation.easeIn(duration: 0.5))
                 .onTapGesture {
                     withAnimation(Animation.easeIn(duration: 0.5)) {}
-                    toggleRecordMenu.toggle()
+                    recordInfoOpen.toggle()
                 }
             
         VStack{
@@ -318,7 +338,9 @@ struct RecordInfoView: View {
             Button("Submit"){
                 withAnimation(
                     .easeIn(duration: 4)){
-                        toggleRecordMenu.toggle()
+                        recordInfoOpen.toggle()
+                        tripStart.toggle()
+
                         viewModel.userTripInfoToFirebase(state: stateLicenese, license: carLicenses)
                     }
                 

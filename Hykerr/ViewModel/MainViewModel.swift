@@ -19,6 +19,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     @Published var profileImage = UIImage(systemName: "person.circle")!
     @Published var userName = "User"
     
+    
     @Published var region = MKCoordinateRegion(
            center: CLLocationCoordinate2D(latitude: 37.334_900, longitude: -122.009_020),
            latitudinalMeters: 750,
@@ -47,9 +48,9 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         case .notDetermined:
             locationManager.requestAlwaysAuthorization()
         case .restricted:
-            print("Location is restrict//ParentalControl")
+            print("Location is restrict//ParentalControl") //Inform User
         case .denied:
-            print("Denied location, go into settings to fix it.")
+            print("Denied location, go into settings to fix it.") //TODO inform user
         case .authorizedAlways, .authorizedWhenInUse:
             if let l = locationManager.location{
             region = MKCoordinateRegion(center: l.coordinate,
@@ -105,10 +106,10 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         
         let locationInfo = ["Time": timeString, "lat": location.latitude, "long": location.longitude] as [String : Any]
                 
-        db.collection(user.uid).document("Trips").updateData(
+        db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").updateData(
             
             //Last Updated Location
-            ["Trip.Last Location":locationInfo
+            ["Current Trip Information.Last Location":locationInfo
 
                 ]){
                     (error) in
@@ -125,6 +126,45 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         }
 
     }
+    
+    
+    func userSaveTripInfoToFirebase(state : String, license: String){
+
+        guard let user = Auth.auth().currentUser else{
+            return
+        }
+        
+        guard let coordsInTrip = coordsInTrip else {
+            return
+        }
+        
+        let carInfo = ["State": state,
+                       "License" : license]
+
+        let coords = coordsInTrip.printList()
+        print(coords)
+        
+        let timeString = getTimeStamp()
+//
+        let locationInfo = ["Time": timeString,
+                            "Car Information": carInfo,
+                            "Coords in Trip": coords] as [String : Any]
+
+
+
+
+
+        let trips = db.collection("Users").document(user.uid).collection("Trips").document("Past Trips")
+
+        trips.updateData(["Past Trips Information": FieldValue.arrayUnion([locationInfo])])
+        
+    }
+        
+
+
+    
+    
+    
     
     func userTripInfoToFirebase(state: String, license: String){
         
@@ -150,8 +190,8 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         let locationInfo = ["Time": timeString, "lat": startLocation.latitude, "long": startLocation.longitude] as [String : Any]
 
         //Firebase firestore database
-        db.collection(user.uid).document("Trips").setData(
-            ["Trip":[
+        db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").updateData(
+            ["Current Trip Information":[
                     "Car Info" : carInfo,
                     "Starting Location" : locationInfo,
                     "Last Location" : locationInfo
@@ -173,6 +213,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
     }
     
+
 
     
     func getUserPicture(){
@@ -234,7 +275,6 @@ struct mapView: UIViewRepresentable{
     //@Binding var region : MKCoordinateRegion
     @Binding var coordsInTrip: LinkedList?
 
-    @Binding var path : MKPolyline?
     let mapViewDelegate = Coordinator()
 
     
@@ -289,17 +329,13 @@ struct mapView: UIViewRepresentable{
             return
         }
 
-        path = MKPolyline(coordinates: coordsInTrip.mapPath(), count: coordsInTrip.mapPath().count)
+       let path = MKPolyline(coordinates: coordsInTrip.mapPath(), count: coordsInTrip.mapPath().count)
 
         
         if !map.overlays.isEmpty{
             map.removeOverlays(map.overlays)
         }
         
-        guard let path = path else{
-            print("Path failed")
-            return
-        }
         //map.setVisibleMapRect(path.boundingMapRect, animated: true)  //Shows whole path
         map.addOverlay(path, level: .aboveRoads)
 
