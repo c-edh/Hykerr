@@ -14,6 +14,9 @@ class K{
         struct button{
             static let buttonColor = Color(UIColor(named:"buttonColor")!)
             static let buttonTextColor = Color(UIColor(named: "buttonTextColor")!)
+            static let emergencyButtonColor = Color(UIColor(named: "emergencyButtonColor")!)
+
+            
             
         }
         struct Text{

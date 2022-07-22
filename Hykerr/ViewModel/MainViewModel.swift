@@ -13,11 +13,13 @@ import SwiftUI
 final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate{
     
     private var db = Firestore.firestore()
-    
+    let tripView = TripViewModel()
     @Published var coordsInTrip : LinkedList?
     
     @Published var profileImage = UIImage(systemName: "person.circle")!
     @Published var userName = "User"
+    
+    var tracking = false
     
     
     @Published var region = MKCoordinateRegion(
@@ -94,6 +96,25 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         
     }
     
+    func getCity(location : CLLocation,  completion: @escaping (String) -> Void){
+        
+        CLGeocoder().reverseGeocodeLocation(location) { placemarks, error in
+
+            guard let placemark = placemarks?.first else {
+                let errorString = error?.localizedDescription ?? "Unexpected Error"
+                print("Unable to reverse geocode the given location. Error: \(errorString)")
+                return
+            }
+
+            let reversedGeoLocation = ReversedGeoLocation(with: placemark)
+            completion(reversedGeoLocation.city)
+         
+        
+        }
+
+        
+    }
+    
     
     
     func userTripInfoToFirebase(current location : CLLocationCoordinate2D){
@@ -122,8 +143,12 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
                 }
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
+            if self.tracking == true{
             self.saveUserLocations()
+            }
+            
         }
+        
 
     }
     
@@ -140,23 +165,35 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         
         let carInfo = ["State": state,
                        "License" : license]
+        
+        guard let endLocation = locationManager?.location else {
+            return
+        }
+        
+        getCity(location: endLocation) { city in
+            coordsInTrip.endTown = city
+        
 
+        
         let coords = coordsInTrip.printList()
         print(coords)
         
-        let timeString = getTimeStamp()
+            let timeString = self.getTimeStamp()
 //
         let locationInfo = ["Time": timeString,
                             "Car Information": carInfo,
+                            "Starting City" : coordsInTrip.startTown,
+                            "Ending City": coordsInTrip.endTown,
                             "Coords in Trip": coords] as [String : Any]
 
 
 
 
 
-        let trips = db.collection("Users").document(user.uid).collection("Trips").document("Past Trips")
+            let trips = self.db.collection("Users").document(user.uid).collection("Trips").document("Past Trips")
 
-        trips.updateData(["Past Trips Information": FieldValue.arrayUnion([locationInfo])])
+            trips.updateData(["Past Trips Information": FieldValue.arrayUnion([locationInfo])])}
+        tripView.getUserTrips()
         
     }
         
@@ -172,25 +209,32 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             return
         }
         
-        guard let startLocation = locationManager?.location?.coordinate else{
+        guard let startLocation = locationManager?.location else{
             return
         }
         
         guard let coordsInTrip = coordsInTrip else {
             return
         }
-
         
-        coordsInTrip.append(startLocation)
+        //safely unwrap below
+        
+        getCity(location: startLocation, completion: { city in
+            coordsInTrip.startTown = city
+            
+        })
+    
+        
+        coordsInTrip.append(startLocation.coordinate)
 
         
         let carInfo = ["State":state, "License": license]
-        let timeString = getTimeStamp()
+            let timeString = self.getTimeStamp()
     
-        let locationInfo = ["Time": timeString, "lat": startLocation.latitude, "long": startLocation.longitude] as [String : Any]
+        let locationInfo = ["Time": timeString, "lat": startLocation.coordinate.latitude, "long": startLocation.coordinate.longitude] as [String : Any]
 
         //Firebase firestore database
-        db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").updateData(
+            self.db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").updateData(
             ["Current Trip Information":[
                     "Car Info" : carInfo,
                     "Starting Location" : locationInfo,
@@ -210,7 +254,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         DispatchQueue.main.asyncAfter(deadline: .now() + 10.0) {
             self.saveUserLocations()
         }
-
+        
     }
     
 
@@ -361,3 +405,34 @@ class Coordinator : NSObject,MKMapViewDelegate{
     
 }
 
+struct ReversedGeoLocation {
+    let name: String            // eg. Apple Inc.
+    let streetName: String      // eg. Infinite Loop
+    let streetNumber: String    // eg. 1
+    let city: String            // eg. Cupertino
+    let state: String           // eg. CA
+    let zipCode: String         // eg. 95014
+    let country: String         // eg. United States
+    let isoCountryCode: String  // eg. US
+
+    var formattedAddress: String {
+        return """
+        \(name),
+        \(streetNumber) \(streetName),
+        \(city), \(state) \(zipCode)
+        \(country)
+        """
+    }
+
+    // Handle optionals as needed
+    init(with placemark: CLPlacemark) {
+        self.name           = placemark.name ?? ""
+        self.streetName     = placemark.thoroughfare ?? ""
+        self.streetNumber   = placemark.subThoroughfare ?? ""
+        self.city           = placemark.locality ?? ""
+        self.state          = placemark.administrativeArea ?? ""
+        self.zipCode        = placemark.postalCode ?? ""
+        self.country        = placemark.country ?? ""
+        self.isoCountryCode = placemark.isoCountryCode ?? ""
+    }
+}

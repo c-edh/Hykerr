@@ -262,18 +262,19 @@ struct RecordInfoView: View {
 
     
     var body: some View {
+        
         Button(tripStart ? "End" : "Record"){
 //                    withAnimation(.spring(dampingFraction: 0.5).speed(3)){}
             if tripStart == false{
                 recordInfoOpen.toggle()
             }
+            
             else{
                 tripStart.toggle()
+                viewModel.tracking = false
 //                print("This should have shown state and car: ",stateLicenese, carLicenses)
                 viewModel.userSaveTripInfoToFirebase(state: stateLicenese, license: carLicenses)
-
             }
-            print("Should have sent location, check")
         }
         .frame(width: 100, height: 100, alignment: .center)
         .shadow(color: .black, radius: 10.0)
@@ -285,7 +286,7 @@ struct RecordInfoView: View {
             Button("Emergency"){
                 //Inform Emergency Contact
                 
-            }.frame(width:100,height:100, alignment: .center).cornerRadius(100).offset(y: 240)
+            }.frame(width:100,height:100, alignment: .center).background(K.color.button.emergencyButtonColor).cornerRadius(100).offset(x:-125,y: 240)
             
         }
         
@@ -340,7 +341,7 @@ struct RecordInfoView: View {
                     .easeIn(duration: 4)){
                         recordInfoOpen.toggle()
                         tripStart.toggle()
-
+                        viewModel.tracking = true
                         viewModel.userTripInfoToFirebase(state: stateLicenese, license: carLicenses)
                     }
                 

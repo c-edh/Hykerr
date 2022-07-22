@@ -9,11 +9,17 @@ import Foundation
 import MapKit
 
 class LinkedList{
+    
+    var startTown : String
+    var endTown : String
+    
     var head : Node
     var tail : Node
     var length: Int
     
     init(_ value:Any) {
+        self.startTown = ""
+        self.endTown = ""
         self.head = Node(value)
         self.tail = self.head
         self.length = 0
