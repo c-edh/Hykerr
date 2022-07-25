@@ -26,6 +26,8 @@
 		F4B784BA2877A56C001707A2 /* AuthenticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */; };
 		F4B784BC2877C8DA001707A2 /* K.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784BB2877C8DA001707A2 /* K.swift */; };
 		F4CE7AA52878D297008703E7 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CE7AA42878D297008703E7 /* PhotoPicker.swift */; };
+		F4F17FF2288E146C00382746 /* SideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F17FF1288E146C00382746 /* SideMenuView.swift */; };
+		F4F17FF4288E165A00382746 /* SideMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F17FF3288E165A00382746 /* SideMenuViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticViewModel.swift; sourceTree = "<group>"; };
 		F4B784BB2877C8DA001707A2 /* K.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = K.swift; sourceTree = "<group>"; };
 		F4CE7AA42878D297008703E7 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		F4F17FF1288E146C00382746 /* SideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuView.swift; sourceTree = "<group>"; };
+		F4F17FF3288E165A00382746 /* SideMenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +141,7 @@
 				F401048728737C3300348851 /* SignUpView.swift */,
 				F4010489287388F400348851 /* MainView.swift */,
 				F45792BE2886EE2500362C8B /* TripHistoryView.swift */,
+				F4F17FF1288E146C00382746 /* SideMenuView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				F4B784B72877A483001707A2 /* MainViewModel.swift */,
 				F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */,
 				F41ABA922888579300A75B01 /* TripViewModel.swift */,
+				F4F17FF3288E165A00382746 /* SideMenuViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -284,6 +290,7 @@
 			files = (
 				F4010481287376C300348851 /* Hykerr.xcdatamodeld in Sources */,
 				F4CE7AA52878D297008703E7 /* PhotoPicker.swift in Sources */,
+				F4F17FF2288E146C00382746 /* SideMenuView.swift in Sources */,
 				F401048C28738B5C00348851 /* LoginView.swift in Sources */,
 				F401048A287388F400348851 /* MainView.swift in Sources */,
 				F401048828737C3300348851 /* SignUpView.swift in Sources */,
@@ -295,6 +302,7 @@
 				F41ABA932888579300A75B01 /* TripViewModel.swift in Sources */,
 				F4B784BA2877A56C001707A2 /* AuthenticViewModel.swift in Sources */,
 				F4AE8A69287CC47D00E9078B /* LinkedList.swift in Sources */,
+				F4F17FF4288E165A00382746 /* SideMenuViewModel.swift in Sources */,
 				F45792BF2886EE2500362C8B /* TripHistoryView.swift in Sources */,
 				F4B784B82877A483001707A2 /* MainViewModel.swift in Sources */,
 			);

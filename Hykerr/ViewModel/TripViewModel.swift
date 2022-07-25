@@ -26,13 +26,19 @@ class TripViewModel: ObservableObject{
             if let document = document, document.exists{
                 let tripsDocument = document.get("Past Trips Information")
                 
-                let arrayOfTrips = tripsDocument as? [Any]
+                guard let arrayOfTrips = tripsDocument as? [Any] else{
+                    return
+                }
                 
-                for trip in arrayOfTrips!{
+            
+                
+                for trip in arrayOfTrips{
                     guard let data = trip as? [String: Any] else{
                         return
                     }
-                    self.trips.append(Trip(startingLocation: data["Starting City"] as! String, endingLocation: data["Ending City"] as! String, distance: 0.0, date: "June"))
+                    print("trip array is being appended too")
+                    self.trips.append(Trip(startingLocation: data["Starting City"] as! String, endingLocation: data["Ending City"] as! String,
+                                           distance: data["Distance"] as! Double, date: data["Date"] as! String))
                     
                 }
                 

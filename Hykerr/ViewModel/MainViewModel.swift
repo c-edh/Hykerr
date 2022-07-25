@@ -16,8 +16,6 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     let tripView = TripViewModel()
     @Published var coordsInTrip : LinkedList?
     
-    @Published var profileImage = UIImage(systemName: "person.circle")!
-    @Published var userName = "User"
     
     var tracking = false
     
@@ -87,12 +85,15 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
     }
     
-    private func getTimeStamp() -> String{
+    private func getTimeStamp() -> [String:String]{
         let date = Date()
         let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormat.dateFormat = "MM-dd-yyyy"
+        let tripDate = dateFormat.string(from: date)
+        dateFormat.dateFormat = "HH:mm:ss"
         let timeString = dateFormat.string(from: date)
-        return timeString
+
+        return ["Date": tripDate, "Time": timeString]
         
     }
     
@@ -123,9 +124,10 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             return
         }
      
-        let timeString = getTimeStamp()
+        let time = getTimeStamp()
         
-        let locationInfo = ["Time": timeString, "lat": location.latitude, "long": location.longitude] as [String : Any]
+        let locationInfo = ["Date": (time["Date"] ?? "Error") as String, "Time": (time["Time"] ?? "Error") as String,
+                            "lat": location.latitude, "long": location.longitude] as [String : Any]
                 
         db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").updateData(
             
@@ -152,6 +154,13 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
     }
     
+    //Improve
+    private  func getDistance(from: CLLocationCoordinate2D, to: CLLocationCoordinate2D) -> CLLocationDistance {
+        let from = CLLocation(latitude: from.latitude, longitude: from.longitude)
+        let to = CLLocation(latitude: to.latitude, longitude: to.longitude)
+        return from.distance(from: to)
+    }
+    
     
     func userSaveTripInfoToFirebase(state : String, license: String){
 
@@ -170,20 +179,36 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             return
         }
         
+        
+        let pathArray = coordsInTrip.mapPath()
+        var total: Double = 0.0
+
+        for i in 0..<pathArray.count - 1 {
+                    let start = pathArray[i]
+                    let end = pathArray[i + 1]
+                    let distance = getDistance(from: start, to: end)
+                    total += distance
+                }
+
+        let distanceTotalInMiles = total/1609.344
+        
         getCity(location: endLocation) { city in
             coordsInTrip.endTown = city
         
-
+        
+            print(distanceTotalInMiles)
         
         let coords = coordsInTrip.printList()
         print(coords)
         
-            let timeString = self.getTimeStamp()
+            let time = self.getTimeStamp()
 //
-        let locationInfo = ["Time": timeString,
+        let locationInfo = ["Date": (time["Date"] ?? "Error") as String,
+                            "Time": (time["Time"] ?? "Error") as String,
                             "Car Information": carInfo,
                             "Starting City" : coordsInTrip.startTown,
                             "Ending City": coordsInTrip.endTown,
+                            "Distance": distanceTotalInMiles,
                             "Coords in Trip": coords] as [String : Any]
 
 
@@ -260,41 +285,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
 
     
-    func getUserPicture(){
-        //Only works after the user sign up they exit the app and reopen it
-        
-        guard let user = Auth.auth().currentUser else {
-            print("getUserPicture didn't get firebase user info right")
-            return
-        }
-        
-    
-
-        let userStoredImageRef =  Storage.storage().reference().child("user/\(user.uid)")
-        
-        userStoredImageRef.getData(maxSize: 1*1024*1024) { data, error in
-            if let error = error{
-                print(error.localizedDescription, "Error has occured, default image is displayed")
-            }else{
-                let userStoredImage = UIImage(data: data!)
-                self.profileImage = userStoredImage!
-
-            }
-        }
-    }
-    
-    
-    func getUserName(){
-        
-        //Not working? dont know about display name
-        guard let user = Auth.auth().currentUser else{
-            return
-            
-        }
-        
-        userName = user.displayName ?? "User1"
-        
-    }
+   
     
     //
     
