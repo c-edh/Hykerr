@@ -48,8 +48,7 @@ struct MainView: View {
                 RecordInfoView(viewModel: viewModel)
             
                     
-                SideMenuView(width: UIScreen.main.bounds.width/1.5,
-                             menuOpened: menuOpened,
+                SideMenuView(menuOpened: menuOpened,
                              toggleMenu: toggleMenu)
                 
             }.ignoresSafeArea(.keyboard)

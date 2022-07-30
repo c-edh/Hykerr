@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SideMenuView: View {
    
-    let width: CGFloat
+    private let width: CGFloat = UIScreen.main.bounds.width/1.5
     let menuOpened: Bool
     let toggleMenu: () -> Void
     

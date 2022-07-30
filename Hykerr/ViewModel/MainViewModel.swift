@@ -15,6 +15,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
     private var db = Firestore.firestore()
     let tripView = TripViewModel()
     @Published var coordsInTrip : LinkedList?
+
     
     
     var tracking = false
@@ -376,6 +377,8 @@ struct mapView: UIViewRepresentable{
 
         
     }
+    
+    
     
 class Coordinator : NSObject,MKMapViewDelegate{
     

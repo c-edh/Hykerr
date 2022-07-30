@@ -14,29 +14,50 @@ struct TripHistoryView: View {
     @StateObject private var viewModel = TripViewModel()
 
     @State private var sideMenuOpened = false
+    @State private var openMapPath = false
+    @State private var selected = false
 
     
     var body: some View {
-        
+        VStack{
             ScrollView{
                 ForEach(viewModel.trips){trip in
                     VStack{
-                        Text(trip.startingLocation + " to " + trip.endingLocation).fontWeight(.heavy)
-                            .frame(width: UIScreen.main.bounds.width-20,alignment:.trailing)
                     
-                        Text("Distance: " + String(format: "%.2f", trip.distance) + " miles")
-                            .frame(width: UIScreen.main.bounds.width-20,alignment:.trailing)
-                   
-                        Text("Date: " + trip.date)
-                            .frame(width: UIScreen.main.bounds.width-20,alignment:.trailing)
+                            Text(trip.startingLocation + " to " + trip.endingLocation).fontWeight(.heavy)
+                                .frame(width: UIScreen.main.bounds.width-20,alignment:.trailing)
+                        
+                            Text("Distance: " + String(format: "%.2f", trip.distance) + " miles")
+                                .frame(width: UIScreen.main.bounds.width-20,alignment:.trailing)
+                       
+                            Text("Date: " + trip.date)
+                                .frame(width: UIScreen.main.bounds.width-20,alignment:.trailing)
+                                
+                        
+                        
                     
                     
-                    Divider()}}
+                    Divider()
+                        
+                    }.onTapGesture {
+                        openMapPath.toggle()
+                        selected.toggle()
+                        viewModel.getCoords(coords: trip.coords)
+                       // print(trip.coords)
+                    }
+                    
+                }
                 
-            }.frame(height:UIScreen.main.bounds.height-100)
+            }.frame(height:openMapPath ? 300: UIScreen.main.bounds.height-100 )
             .onAppear{
                 viewModel.getUserTrips()
             }
+            if openMapPath == true{
+                TripView(coordsInTrip: viewModel.mapTripCoords).frame(width: 300, height: 300, alignment: .center).cornerRadius(20).padding(75)
+            }
+//
+            
+        }.frame(height: UIScreen.main.bounds.height-100).background(.blue)
             
             .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){
