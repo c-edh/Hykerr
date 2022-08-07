@@ -26,12 +26,14 @@ class TripViewModel: ObservableObject{
         
         tripsData.getDocument { (document, error) in
             if let document = document, document.exists{
-                let tripsDocument = document.get("Past Trips Information")
-                
-                guard let arrayOfTrips = tripsDocument as? [Any] else{
+                guard let arrayOfTrips = document.get("Past Trips Information") as? [Any] else{
                     return
                 }
                 
+//                guard let arrayOfTrips = tripsDocument as? [Any] else{
+//                    return
+//                }
+//
             
                 
                 for trip in arrayOfTrips{
@@ -97,7 +99,7 @@ struct TripView: UIViewRepresentable{
     
     
     //@Binding var region : MKCoordinateRegion
-    @State var coordsInTrip : [CLLocationCoordinate2D]?
+    @Binding var coordsInTrip : [CLLocationCoordinate2D]?
 
     let mapViewDelegate = Coordinator()
 
@@ -105,44 +107,44 @@ struct TripView: UIViewRepresentable{
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
         
-//        if let coordsInTrip = coordsInTrip {
-//
-//
-////        let region = MKCoordinateRegion(
-////            center: coordsInTrip  as! CLLocationCoordinate2D,
-////            latitudinalMeters: 750,
-////            longitudinalMeters: 750
-////        )
-////
-////
-////
-////        map.region = region
-//        }
-        addPath(to: map)
+        guard let coordsInTrip = coordsInTrip else {
+            print("NO COORDS")
+            return map
+        }
+        
+        
+        
+        let path = MKPolyline(coordinates: coordsInTrip, count: coordsInTrip.count)
+
+         
+         if !map.overlays.isEmpty{
+             map.removeOverlays(map.overlays)
+         }
+        
+        let startLocationPin = MKPointAnnotation()
+        startLocationPin.coordinate = coordsInTrip[0]
+        startLocationPin.title = "Start"
+        
+        let endLocationPin = MKPointAnnotation()
+        endLocationPin.coordinate = coordsInTrip[coordsInTrip.count-1]
+        endLocationPin.title = "End"
+        
+        map.addAnnotation(startLocationPin)
+        map.addAnnotation(endLocationPin)
+        
+        
+         
+         //map.setVisibleMapRect(path.boundingMapRect, animated: true)  //Shows whole path
+       DispatchQueue.main.async {
+
+            map.addOverlay(path, level: .aboveRoads)
+           map.setVisibleMapRect(path.boundingMapRect,edgePadding: UIEdgeInsets(top: 40, left: 40, bottom: 40, right: 40), animated: false)}
+        
         return map
     }
     
     func updateUIView(_ map: MKMapView, context: Context) {
 
-    }
-    
-    func addPath(to map : MKMapView){
-        guard let coordsInTrip = coordsInTrip else {
-            return
-        }
-
-       let path = MKPolyline(coordinates: coordsInTrip, count: coordsInTrip.count)
-
-        
-        if !map.overlays.isEmpty{
-            map.removeOverlays(map.overlays)
-        }
-        
-        //map.setVisibleMapRect(path.boundingMapRect, animated: true)  //Shows whole path
-        map.addOverlay(path, level: .aboveRoads)
-        map.setVisibleMapRect(path.boundingMapRect, animated: true)
-
-        
     }
     
     

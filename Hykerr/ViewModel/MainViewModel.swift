@@ -217,10 +217,21 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
 
 
             let trips = self.db.collection("Users").document(user.uid).collection("Trips").document("Past Trips")
+            
+            trips.getDocument{ (document, error) in
+                if let document = document, document.exists{
+                    trips.updateData(["Past Trips Information": FieldValue.arrayUnion([locationInfo])])
+                    
+                }else {
+                    trips.setData(
+                        ["Past Trips Information": FieldValue.arrayUnion([locationInfo])]
+                    )
+                    
+                }
+            }
 
-            trips.updateData(["Past Trips Information": FieldValue.arrayUnion([locationInfo])])}
-        tripView.getUserTrips()
-        
+            self.tripView.getUserTrips()
+        }
     }
         
 
@@ -260,7 +271,7 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
         let locationInfo = ["Time": timeString, "lat": startLocation.coordinate.latitude, "long": startLocation.coordinate.longitude] as [String : Any]
 
         //Firebase firestore database
-            self.db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").updateData(
+            self.db.collection("Users").document(user.uid).collection("Trips").document("Current Trip").setData(
             ["Current Trip Information":[
                     "Car Info" : carInfo,
                     "Starting Location" : locationInfo,
@@ -281,6 +292,51 @@ final class MainViewModel: NSObject, ObservableObject, CLLocationManagerDelegate
             self.saveUserLocations()
         }
         
+    }
+    
+    func emergency(state: String, car: String, activeEmergency: Bool){
+        
+        let time = getTimeStamp()
+        guard let user = Auth.auth().currentUser else{
+            return
+        }
+        
+        guard let coordsInTrip = coordsInTrip else {
+            return
+        }
+        
+        guard let location = locationManager?.location else {
+            return
+        }
+        
+        
+
+     //Provides the database with who the hiker was with,
+    //where they have been, and if it is activate or not.
+        
+            self.db.collection("Emergency").document(user.uid).setData(
+                ["Driver Info":
+                    ["State": state,
+                     "Car License": car],
+                 "Reported Time": (time["Time"] ?? "N/A") as String,
+                 "Active Emergency": activeEmergency,
+                 "Text Emergency Contact" : false,
+                 "Coords in Trip": coordsInTrip.printList(),
+                 "Current Location": ["Lat": String(location.coordinate.latitude),
+                                      "Long": String(location.coordinate.longitude),
+                                      "Time": time["Time"]
+                                     ]
+                ]){
+                    (error) in
+                    if let e = error{
+                        print(e)
+                    }else{
+                        print("Database received the emergency")
+                    }
+                    
+                }
+        
+
     }
     
 

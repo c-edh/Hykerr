@@ -16,7 +16,7 @@ struct TripHistoryView: View {
     @State private var sideMenuOpened = false
     @State private var openMapPath = false
     @State private var selected = false
-
+    //private var selectedTrip = ""
     
     var body: some View {
         VStack{
@@ -40,6 +40,10 @@ struct TripHistoryView: View {
                     Divider()
                         
                     }.onTapGesture {
+                        if (openMapPath == true){
+                           //Todo, change region if different trip is selected
+                            
+                        }
                         openMapPath.toggle()
                         selected.toggle()
                         viewModel.getCoords(coords: trip.coords)
@@ -53,11 +57,11 @@ struct TripHistoryView: View {
                 viewModel.getUserTrips()
             }
             if openMapPath == true{
-                TripView(coordsInTrip: viewModel.mapTripCoords).frame(width: 300, height: 300, alignment: .center).cornerRadius(20).padding(75)
+                TripView(coordsInTrip: $viewModel.mapTripCoords).frame(width: 300, height: 300, alignment: .center).cornerRadius(20).padding(75).shadow(radius: 10)
             }
 //
             
-        }.frame(height: UIScreen.main.bounds.height-100).background(.blue)
+        }.frame(height: UIScreen.main.bounds.height-100)
             
             .toolbar{
             ToolbarItem(placement: .navigationBarTrailing){

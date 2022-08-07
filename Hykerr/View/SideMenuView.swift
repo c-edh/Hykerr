@@ -52,7 +52,8 @@ struct MenuContent: View{
   //  let userProfilePicture: Image?
     let items : [MenuItem] = [
         //MenuItem(text:"Home", symbol: "house.circle"),
-        MenuItem(text: "Trip History", symbol: "clock.arrow.circlepath")
+        MenuItem(text: "Trip History", symbol: "clock.arrow.circlepath"),
+        MenuItem(text: "Settings", symbol: "gear")
        // MenuItem(text: "Settings", symbol: "gearshape"),
     ]
     

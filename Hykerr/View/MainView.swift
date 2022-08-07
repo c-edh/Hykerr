@@ -90,11 +90,12 @@ struct MainView: View {
 struct RecordInfoView: View {
     
     @State var viewModel: MainViewModel
-    @State var stateLicenese = ""
+    @State var stateLicense = ""
     @State var carLicenses = ""
     
     @State private var recordInfoOpen = false
     @State private var tripStart = false
+    @State private var emergencyReported = false
 
     
    // @State private var recordInfoY : CGFloat = UIScreen.main.bounds.height/3
@@ -114,7 +115,7 @@ struct RecordInfoView: View {
                 tripStart.toggle()
                 viewModel.tracking = false
 //                print("This should have shown state and car: ",stateLicenese, carLicenses)
-                viewModel.userSaveTripInfoToFirebase(state: stateLicenese, license: carLicenses)
+                viewModel.userSaveTripInfoToFirebase(state: stateLicense, license: carLicenses)
             }
         }
         .frame(width: 100, height: 100, alignment: .center)
@@ -124,10 +125,12 @@ struct RecordInfoView: View {
         .offset(x: 125, y: 240)
         
         if tripStart == true{
-            Button("Emergency"){
-                //Inform Emergency Contact
+            Button(emergencyReported ? "Stop" : "Emergency"){
+                //Inform Emergency Contact (server side)
+                emergencyReported.toggle()
+                viewModel.emergency(state: stateLicense, car: carLicenses, activeEmergency: emergencyReported)
                 
-            }.frame(width:100,height:100, alignment: .center).background(K.color.button.emergencyButtonColor).cornerRadius(100).offset(x:-125,y: 240)
+            }.frame(width:100,height:100, alignment: .center).background(K.color.button.emergencyButtonColor).cornerRadius(20).offset(x:-125,y: 240)
             
         }
         
@@ -148,7 +151,7 @@ struct RecordInfoView: View {
             
             HStack{
               Spacer()
-                TextField("State",text: $stateLicenese)
+                TextField("State",text: $stateLicense)
                     .frame(width: 75, alignment: .center)
                     .textFieldStyle(.roundedBorder)
                     .shadow(color: .black, radius: 1.0)
@@ -162,6 +165,9 @@ struct RecordInfoView: View {
                 Button(
                     action:{
                             print("Place holder")
+                        //Get license plate
+                        
+                        
                         
                     },
                        
@@ -182,10 +188,9 @@ struct RecordInfoView: View {
                         recordInfoOpen.toggle()
                         tripStart.toggle()
                         viewModel.tracking = true
-                        viewModel.userTripInfoToFirebase(state: stateLicenese, license: carLicenses)
+                        viewModel.userTripInfoToFirebase(state: stateLicense, license: carLicenses)
                     }
                 
-                print("test")
             }.frame(width: 200, height: 50, alignment: .center)
                 .foregroundColor(K.color.button.buttonTextColor)
                 .background(K.color.button.buttonColor)
