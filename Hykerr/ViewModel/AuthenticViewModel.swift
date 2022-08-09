@@ -12,6 +12,8 @@ class AuthenticViewModel: ObservableObject{
     @Published var signedIn = false
     @Published var loginUserErrorFeedback = ""
     
+    private var db = Firestore.firestore()
+    
    private enum loginError{
         
     }
@@ -81,6 +83,27 @@ class AuthenticViewModel: ObservableObject{
         
         
         
+        }
+        
+    }
+    
+    //MARK: - Uploading User Data
+    
+    func uploadUserPersonalInfo(firstName: String, lastName: String, phoneNumber: String, userEmergencyContact: String){
+        Auth.auth().addStateDidChangeListener { auth, user in
+          // ...
+            guard let user = user else{
+                print("Still no user is found")
+                return
+
+            }
+            self.db.collection("Users").document(user.uid).setData([
+                "Name" : ["first": firstName, "last":lastName],
+                "PhoneNumber":["personal":phoneNumber,"emergency":userEmergencyContact]
+            ])
+            
+            
+            
         }
         
     }

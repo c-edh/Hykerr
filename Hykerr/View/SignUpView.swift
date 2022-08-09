@@ -19,6 +19,7 @@ struct SignUpView: View {
     
     @State private var isShowingImagePhotoPicker = false
     @State private var profileImage = UIImage(systemName: "person.circle")!
+    @State private var userSelectedImage = false
     
     @State var userHint = ""
     @State private var showUserHint = false
@@ -81,10 +82,30 @@ struct SignUpView: View {
             }
             Button("Sign Up"){
                 if (password == passwordCheck){
-                    authenticViewModel.createUserAccount(email: email, password: password)
-                    authenticViewModel.uploadUserProfilePicture(with: profileImage)
+                    
+                    if (firstName == "") && (lastName == ""){
+                        userHint = "Missing name"
+                    }
+                    else if (phoneNumber == "") || (phoneNumber.count < 9){
+                        userHint = "Missing Phone Number"
+                    }
+                    else if (contactNumber == "") || (contactNumber.count < 9){
+                        userHint = "Missing Emergency Contact Info"
+                    }else{
+                        authenticViewModel.createUserAccount(email: email, password: password)
+
+                        authenticViewModel.uploadUserPersonalInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, userEmergencyContact: contactNumber)
+                        
+                    
+                    
+                    //If user selects a profile picture uploads, else it uses default
+                    if userSelectedImage == true{
+                        authenticViewModel.uploadUserProfilePicture(with: profileImage)
+                        
+                    }
                     authenticViewModel.userInfo(name: firstName)
                     //Take user to the next screen
+                    }
                     
                 }else{
                     showUserHint = true
@@ -95,7 +116,7 @@ struct SignUpView: View {
             
             
         }.sheet(isPresented: $isShowingImagePhotoPicker, content: {
-            PhotoPicker(profileImage: $profileImage)
+            PhotoPicker(profileImage: $profileImage, userSelectedImage: $userSelectedImage)
         })
         
     }

@@ -11,6 +11,7 @@ import Firebase
 struct PhotoPicker: UIViewControllerRepresentable{
     
     @Binding var profileImage: UIImage
+    @Binding var userSelectedImage: Bool
 
     
     func makeUIViewController(context: Context) -> UIImagePickerController {
@@ -47,6 +48,8 @@ struct PhotoPicker: UIViewControllerRepresentable{
                 }
                 
                 photoPicker.profileImage = compressedImage
+                photoPicker.userSelectedImage = true
+                
             }else{
                 //Return show the user mess up
                 print("Photo mess up")

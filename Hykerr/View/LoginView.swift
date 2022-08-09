@@ -25,9 +25,10 @@ struct LoginView: View {
                     }.frame(width: 300, height: 100, alignment: .leading)
                     
                     Form{
-                        TextField("Email",text: $email)
+                        TextField("Email",text: $email).disableAutocorrection(true).textInputAutocapitalization(.never)
+                        
                         if !forgotPassword{
-                            SecureField("Password",text: $password).disableAutocorrection(true)
+                            SecureField("Password",text: $password).disableAutocorrection(true).textInputAutocapitalization(.never)
                         }
 
                         

@@ -17,6 +17,7 @@
 		F401048828737C3300348851 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401048728737C3300348851 /* SignUpView.swift */; };
 		F401048A287388F400348851 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4010489287388F400348851 /* MainView.swift */; };
 		F401048C28738B5C00348851 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F401048B28738B5C00348851 /* LoginView.swift */; };
+		F404842A28A0E0020009A5CF /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F404842928A0E0020009A5CF /* SettingsViewModel.swift */; };
 		F41ABA932888579300A75B01 /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41ABA922888579300A75B01 /* TripViewModel.swift */; };
 		F42CF8CC2895EA3E00AA02F5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CF8CB2895EA3E00AA02F5 /* SettingsView.swift */; };
 		F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DF0B228755DB200433D5B /* AccountManager.swift */; };
@@ -45,6 +46,7 @@
 		F401048728737C3300348851 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		F4010489287388F400348851 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		F401048B28738B5C00348851 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		F404842928A0E0020009A5CF /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		F41ABA922888579300A75B01 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		F42CF8CB2895EA3E00AA02F5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		F44DF0B228755DB200433D5B /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				F4B784B92877A56C001707A2 /* AuthenticViewModel.swift */,
 				F41ABA922888579300A75B01 /* TripViewModel.swift */,
 				F4F17FF3288E165A00382746 /* SideMenuViewModel.swift */,
+				F404842928A0E0020009A5CF /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				F4F17FF2288E146C00382746 /* SideMenuView.swift in Sources */,
 				F42CF8CC2895EA3E00AA02F5 /* SettingsView.swift in Sources */,
 				F401048C28738B5C00348851 /* LoginView.swift in Sources */,
+				F404842A28A0E0020009A5CF /* SettingsViewModel.swift in Sources */,
 				F401048A287388F400348851 /* MainView.swift in Sources */,
 				F401048828737C3300348851 /* SignUpView.swift in Sources */,
 				F401047E287376C300348851 /* Persistence.swift in Sources */,

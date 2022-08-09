@@ -13,6 +13,8 @@ class SideMenuViewModel: ObservableObject{
     @Published var profileImage = UIImage(systemName: "person.circle")!
     @Published var userName = "User"
     
+    private var db = Firestore.firestore()
+    
     func getUserPicture(){
         //Only works after the user sign up they exit the app and reopen it
         
@@ -34,18 +36,40 @@ class SideMenuViewModel: ObservableObject{
 
             }
         }
+        
+        getUserName()
     }
     
     
     func getUserName(){
         
-        //Not working? dont know about display name
         guard let user = Auth.auth().currentUser else{
             return
             
         }
         
-        userName = user.displayName ?? "User1"
+        let userData = self.db.collection("Users").document(user.uid)
+        
+        userData.getDocument { (document, error) in
+            if let document = document, document.exists{
+                guard let name = document.get("Name") as? [String: Any] else{
+                    print("This failed")
+                    return
+                }
+                
+                guard let firstName = name["first"] as? String else{
+                    return
+                }
+                self.userName = firstName
+                
+                
+            }
+        }
+
+        
+        
+        
+        
         
     }
 }
