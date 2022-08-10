@@ -22,9 +22,10 @@ struct SettingsView: View {
     var body: some View {
         VStack{
             Image(uiImage: profileImage)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 100, alignment: .center).padding(20)
+                .resizable().frame(width: 100, height: 100, alignment: .center)
+                .cornerRadius(100)
+                .shadow(color: .black, radius: 2, y:3)
+                .padding(20)
             
             VStack{
                 TextField("Name", text: $userName)
@@ -33,7 +34,7 @@ struct SettingsView: View {
                 TextField("Email", text: $userEmail)
                     .textFieldStyle(.roundedBorder)
                 
-                TextField("PhoneNumber", text: $userPhoneNumber).keyboardType(.phonePad)
+                TextField("Phone Number", text: $userPhoneNumber).keyboardType(.phonePad)
                     .textFieldStyle(.roundedBorder)
                     .padding(.top)
                 
@@ -45,12 +46,12 @@ struct SettingsView: View {
             }.onAppear{
                 viewModel.getUserInformation()
             }
-            .frame(width:270,height: 200)
-            .padding(20).background(Color(hue: 1.0, saturation: 0.001, brightness: 0.906)).cornerRadius(50).shadow(radius: 10)
+            .frame(width:270)
+            .padding(20).background(K.color.button.buttonColor).cornerRadius(20).shadow(radius: 10)
             
             Toggle(isOn: $bioMetricsIsOn) {
-                Text("End Emergencies\nWith Biometrics")
-            }.padding().frame(width: 270, height: 100, alignment: .center).background(.gray).cornerRadius(20)
+                Text("End Emergencies\nWith Biometrics").foregroundColor(K.color.button.buttonTextColor)
+            }.padding().frame(width: 300, height: 100, alignment: .center).background(K.color.button.buttonColor).cornerRadius(20).shadow(radius: 10)
             
             Button(action: {
                 

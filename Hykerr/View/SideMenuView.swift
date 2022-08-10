@@ -40,22 +40,10 @@ struct SideMenuView: View {
     }
 }
 
-struct MenuItem: Identifiable{
-    var id = UUID()
-    let text: String
-    let symbol : String
-}
+
 struct MenuContent: View{
     let toggleMenu: () -> Void
 
-    
-  //  let userProfilePicture: Image?
-    let items : [MenuItem] = [
-        //MenuItem(text:"Home", symbol: "house.circle"),
-        MenuItem(text: "Trip History", symbol: "clock.arrow.circlepath"),
-        MenuItem(text: "Settings", symbol: "gear")
-       // MenuItem(text: "Settings", symbol: "gearshape"),
-    ]
     
     @EnvironmentObject var authenticViewModel : AuthenticViewModel
     @StateObject var sideMenuViewModel = SideMenuViewModel()
@@ -86,27 +74,10 @@ struct MenuContent: View{
 
                 Divider().foregroundColor(.black).padding()
                 
-                ForEach(items){item in
+                ForEach(SideMenuContentModel.allCases, id: \.self){item in
+                   SideMenuContentView(viewModel: item)
                     
-                    HStack{
-                        NavigationLink(destination: TripHistoryView(), label:{
-                        Image(systemName: item.symbol)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .foregroundColor(K.color.Text.textColor)
-                            .frame(width: 32, height: 32, alignment: .center)
-                        
-                        Text(item.text)
-                            .foregroundColor(K.color.Text.textColor)
-                            .bold()
-                            .font(.system(size: 22))
-                            .multilineTextAlignment(.leading)
-                        
-                        Spacer()
-                        })
-                        
-                    }
-//                    Divider()
+                
                 }.padding(.top,20)
                 
             }.padding().offset(y:-250)
@@ -129,3 +100,40 @@ struct MenuContent: View{
 //        //SideMenuView()
 //    }
 //}
+
+struct SideMenuContentView: View {
+    let viewModel : SideMenuContentModel
+    
+    @State private var destinationView : SideMenuContentModel? = .settings
+    
+    var body: some View {
+        HStack{
+            NavigationLink(destination: view(goto: viewModel) , label:{
+                Image(systemName: viewModel.symbol)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(K.color.Text.textColor)
+                    .frame(width: 32, height: 32, alignment: .center)
+                
+                Text(viewModel.title)
+                    .foregroundColor(K.color.Text.textColor)
+                    .bold()
+                    .font(.system(size: 22))
+                    .multilineTextAlignment(.leading)
+                
+                Spacer()
+            })
+            
+        }
+    }
+    
+    @ViewBuilder
+    func view(goto destination: SideMenuContentModel?) -> some View{
+        switch destination{
+        case .some(.settings): SettingsView()
+        case .some(.triphistory): TripHistoryView()
+        default:
+            EmptyView()
+        }
+    }
+}
