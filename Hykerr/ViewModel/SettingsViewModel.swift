@@ -11,14 +11,16 @@ import UIKit
 
 class SettingsViewModel: ObservableObject{
     
-    @Published var profileImage: UIImage?
-    @Published var userName: String?
-    @Published var personalNumber: String?
-    @Published var emergencyNumber: String?
+    @Published var profileImage = UIImage(systemName: "person.circle")!
+    @Published var userName: String = ""
+    @Published var lastName: String = ""
+    @Published var personalNumber: String = ""
+    @Published var emergencyNumber: String = ""
     
     private var db = Firestore.firestore()
     
 
+    
     
     
     func getUserPicture(){
@@ -77,7 +79,16 @@ class SettingsViewModel: ObservableObject{
                 guard let firstName = name["first"] as? String else{
                     return
                 }
+                
+                guard let lastName = name["last"] as? String else{
+                    return
+                }
+                
+                print(firstName)
+                print(personalNumber)
+                print(emergencyNumber)
                 self.userName = firstName
+                self.lastName = lastName
                 self.personalNumber = personalNumber
                 self.emergencyNumber = emergencyNumber
                 
@@ -85,8 +96,26 @@ class SettingsViewModel: ObservableObject{
             }
         }
         
-        
     }
+    
+    func updateUserInformation(){
+     
+        guard let user = Auth.auth().currentUser else{
+                print("Still no user is found")
+                return
+
+            }
+        
+        print(emergencyNumber)
+        
+        self.db.collection("Users").document(user.uid).updateData([
+                "Name" : ["first": userName, "last":lastName],
+                "PhoneNumber":["personal":personalNumber,"emergency":emergencyNumber]
+        ])
+            
+    }
+    
+
     
     
     

@@ -10,41 +10,45 @@ import SwiftUI
 struct SettingsView: View {
     
     @StateObject private var viewModel = SettingsViewModel()
-    
-    @State private var profileImage = UIImage(systemName: "person.circle")!
-    @State private var userName = ""
     @State private var userEmail = ""
-    @State private var userPhoneNumber = ""
-    @State private var userEmergencyContact = ""
-    
+
     @State private var bioMetricsIsOn = false
 
     var body: some View {
         VStack{
-            Image(uiImage: profileImage)
+            Image(uiImage: viewModel.profileImage)
                 .resizable().frame(width: 100, height: 100, alignment: .center)
                 .cornerRadius(100)
                 .shadow(color: .black, radius: 2, y:3)
                 .padding(20)
             
             VStack{
-                TextField("Name", text: $userName)
-                    .textFieldStyle(.roundedBorder)
+                HStack{
+                    TextField("First Name", text: $viewModel.userName)
+                        .textFieldStyle(.roundedBorder)
+                        .minimumScaleFactor(0.05)
+                    
+                    TextField("Last Name", text: $viewModel.lastName)
+                        .textFieldStyle(.roundedBorder)
+                        .minimumScaleFactor(0.05)
+                
+                }
                 
                 TextField("Email", text: $userEmail)
                     .textFieldStyle(.roundedBorder)
                 
-                TextField("Phone Number", text: $userPhoneNumber).keyboardType(.phonePad)
+                TextField("Phone Number", text: $viewModel.personalNumber).keyboardType(.phonePad)
                     .textFieldStyle(.roundedBorder)
                     .padding(.top)
                 
-                TextField("Emergency Contact", text: $userEmergencyContact).keyboardType(.phonePad)
+                TextField("Emergency Contact", text: $viewModel.emergencyNumber).keyboardType(.phonePad)
                     .textFieldStyle(.roundedBorder)
                 
                 
                 
             }.onAppear{
                 viewModel.getUserInformation()
+                viewModel.getUserPicture()
             }
             .frame(width:270)
             .padding(20).background(K.color.button.buttonColor).cornerRadius(20).shadow(radius: 10)
@@ -54,7 +58,7 @@ struct SettingsView: View {
             }.padding().frame(width: 300, height: 100, alignment: .center).background(K.color.button.buttonColor).cornerRadius(20).shadow(radius: 10)
             
             Button(action: {
-                
+                viewModel.updateUserInformation()
             }, label: {
                 Text("Update")
                     .frame(width: 150, height:50)

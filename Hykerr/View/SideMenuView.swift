@@ -67,8 +67,8 @@ struct MenuContent: View{
                 HStack{
                     Text("Hi,").foregroundColor(K.color.Text.textColor).font(.system(size: 22))
                     Text(sideMenuViewModel.userName)
-                    .foregroundColor(K.color.Text.textColor).font(.system(size: 22)).fontWeight(.heavy)
-                    }.frame(width:100,alignment:.center).padding(.top,25).onAppear{
+                    .foregroundColor(K.color.Text.textColor).font(.system(size: 22)).fontWeight(.heavy).minimumScaleFactor(0.05)
+                    }.frame(width:150,alignment:.center).padding(.top,25).onAppear{
                         sideMenuViewModel.getUserName()
                     }
 

@@ -21,7 +21,6 @@
 		F404842C28A317D20009A5CF /* SideMenuContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F404842B28A317D20009A5CF /* SideMenuContentModel.swift */; };
 		F41ABA932888579300A75B01 /* TripViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41ABA922888579300A75B01 /* TripViewModel.swift */; };
 		F42CF8CC2895EA3E00AA02F5 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42CF8CB2895EA3E00AA02F5 /* SettingsView.swift */; };
-		F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44DF0B228755DB200433D5B /* AccountManager.swift */; };
 		F44DF0B52875609300433D5B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F44DF0B42875609300433D5B /* GoogleService-Info.plist */; };
 		F45792BF2886EE2500362C8B /* TripHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F45792BE2886EE2500362C8B /* TripHistoryView.swift */; };
 		F4AE8A69287CC47D00E9078B /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AE8A68287CC47D00E9078B /* LinkedList.swift */; };
@@ -51,7 +50,6 @@
 		F404842B28A317D20009A5CF /* SideMenuContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuContentModel.swift; sourceTree = "<group>"; };
 		F41ABA922888579300A75B01 /* TripViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripViewModel.swift; sourceTree = "<group>"; };
 		F42CF8CB2895EA3E00AA02F5 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		F44DF0B228755DB200433D5B /* AccountManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountManager.swift; sourceTree = "<group>"; };
 		F44DF0B42875609300433D5B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F45792BE2886EE2500362C8B /* TripHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripHistoryView.swift; sourceTree = "<group>"; };
 		F4AE8A68287CC47D00E9078B /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
@@ -116,7 +114,6 @@
 			children = (
 				F4AE8A67287CC44E00E9078B /* Model */,
 				F4010474287376C200348851 /* HykerrApp.swift */,
-				F44DF0B228755DB200433D5B /* AccountManager.swift */,
 				F4AE8A6A287CC49100E9078B /* Models */,
 				F4B784B62877A423001707A2 /* ViewModel */,
 				F401048E28739D6E00348851 /* View */,
@@ -310,7 +307,6 @@
 				F4010477287376C200348851 /* ContentView.swift in Sources */,
 				F4B784BC2877C8DA001707A2 /* K.swift in Sources */,
 				F4010475287376C200348851 /* HykerrApp.swift in Sources */,
-				F44DF0B328755DB200433D5B /* AccountManager.swift in Sources */,
 				F41ABA932888579300A75B01 /* TripViewModel.swift in Sources */,
 				F4B784BA2877A56C001707A2 /* AuthenticViewModel.swift in Sources */,
 				F4AE8A69287CC47D00E9078B /* LinkedList.swift in Sources */,

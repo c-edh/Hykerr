@@ -71,7 +71,6 @@ class AuthenticViewModel: ObservableObject{
             return
         }
         
-
         
         let changeRequest = user.createProfileChangeRequest()
         changeRequest.displayName = name
