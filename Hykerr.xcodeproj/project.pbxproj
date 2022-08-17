@@ -112,9 +112,8 @@
 		F4010473287376C200348851 /* Hykerr */ = {
 			isa = PBXGroup;
 			children = (
-				F4AE8A67287CC44E00E9078B /* Model */,
 				F4010474287376C200348851 /* HykerrApp.swift */,
-				F4AE8A6A287CC49100E9078B /* Models */,
+				F4AE8A6A287CC49100E9078B /* Model */,
 				F4B784B62877A423001707A2 /* ViewModel */,
 				F401048E28739D6E00348851 /* View */,
 				F4010478287376C300348851 /* Assets.xcassets */,
@@ -150,21 +149,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		F4AE8A67287CC44E00E9078B /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		F4AE8A6A287CC49100E9078B /* Models */ = {
+		F4AE8A6A287CC49100E9078B /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				F4CE7AA42878D297008703E7 /* PhotoPicker.swift */,
 				F4AE8A68287CC47D00E9078B /* LinkedList.swift */,
 				F404842B28A317D20009A5CF /* SideMenuContentModel.swift */,
 			);
-			path = Models;
+			path = Model;
 			sourceTree = "<group>";
 		};
 		F4B784B62877A423001707A2 /* ViewModel */ = {

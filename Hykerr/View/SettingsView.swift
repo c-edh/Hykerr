@@ -34,7 +34,7 @@ struct SettingsView: View {
                 
                 }
                 
-                TextField("Email", text: $userEmail)
+                TextField("Email", text: $viewModel.userEmail)
                     .textFieldStyle(.roundedBorder)
                 
                 TextField("Phone Number", text: $viewModel.personalNumber).keyboardType(.phonePad)

@@ -16,6 +16,9 @@ class SettingsViewModel: ObservableObject{
     @Published var lastName: String = ""
     @Published var personalNumber: String = ""
     @Published var emergencyNumber: String = ""
+    @Published var userEmail: String = ""
+    
+    private var userInformation: [String:String] = [:]
     
     private var db = Firestore.firestore()
     
@@ -87,10 +90,17 @@ class SettingsViewModel: ObservableObject{
                 print(firstName)
                 print(personalNumber)
                 print(emergencyNumber)
+                self.userEmail = user.email!
                 self.userName = firstName
                 self.lastName = lastName
                 self.personalNumber = personalNumber
                 self.emergencyNumber = emergencyNumber
+                
+                self.userInformation["email"] = user.email!
+                self.userInformation["firstName"] = firstName
+                self.userInformation["lastName"] = lastName
+                self.userInformation["personalNumber"] = personalNumber
+                self.userInformation["emergencyNumber"] = emergencyNumber
                 
                 
             }
@@ -101,18 +111,47 @@ class SettingsViewModel: ObservableObject{
     func updateUserInformation(){
      
         guard let user = Auth.auth().currentUser else{
-                print("Still no user is found")
+                print("no user is found")
                 return
 
             }
         
-        print(emergencyNumber)
+        if userName != userInformation["firstName"]{
+            updateUserFirstName(user.uid)
+            userInformation["firstName"] = userName
+        }
         
-        self.db.collection("Users").document(user.uid).updateData([
-                "Name" : ["first": userName, "last":lastName],
-                "PhoneNumber":["personal":personalNumber,"emergency":emergencyNumber]
-        ])
+        if lastName != userInformation["lastName"]{
+            updateUserFirstName(user.uid)
+            userInformation["lastName"] = lastName
+        }
+        
+        if personalNumber != userInformation["personalNumber"]{
+            updateUserPersonalNumber(user.uid)
+            userInformation["personalNumber"] = personalNumber
+        }
+        
+        if emergencyNumber != userInformation["emergencyNumber"]{
+            updateUserEmergencyNumber(user.uid)
+            userInformation["emergencyNumber"] = emergencyNumber
+        }
             
+    }
+    
+    private func updateUserFirstName(_ user: String){
+        self.db.collection("Users").document(user).updateData(["Name.first":userName])
+    }
+    
+    private func updateUserLastName(_ user: String){
+        self.db.collection("Users").document(user).updateData(["Name.last":lastName])
+    }
+    
+    private func updateUserPersonalNumber(_ user: String){
+        self.db.collection("Users").document(user).updateData(["PhoneNumber.personal":personalNumber])
+    }
+    
+    private func updateUserEmergencyNumber(_ user: String){
+        self.db.collection("Users").document(user).updateData(["PhoneNumber.emergency":emergencyNumber])
     }
     
 
