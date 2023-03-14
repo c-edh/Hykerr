@@ -13,7 +13,7 @@ import FirebaseAuth
 struct ContentView: View {
    
     @State var userIsLogout  = false
-    @EnvironmentObject var authenticViewModel : AuthenticViewModel
+    @EnvironmentObject var authenticViewModel : AuthenticationViewModel
 
     var body: some View {
         
@@ -22,21 +22,14 @@ struct ContentView: View {
             MainView()
         }else{
             AppStartView()
-
         }
-        
     }
-        
 }
-
-
 
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(AuthenticViewModel())
-        
-        
+        ContentView().environmentObject(AuthenticationViewModel())
     }
 }
 

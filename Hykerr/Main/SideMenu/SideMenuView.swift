@@ -43,9 +43,7 @@ struct SideMenuView: View {
 
 struct MenuContent: View{
     let toggleMenu: () -> Void
-
-    
-    @EnvironmentObject var authenticViewModel : AuthenticViewModel
+    @EnvironmentObject var authenticViewModel : AuthenticationViewModel
     @StateObject var sideMenuViewModel = SideMenuViewModel()
 
     var body: some View{

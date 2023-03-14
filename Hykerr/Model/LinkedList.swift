@@ -27,7 +27,6 @@ class LinkedList{
     }
     
     func append(_ value: Any){
-        
         let newNode = Node(value)
         //Start the linklist as nil,
         if self.length == 0{
@@ -35,11 +34,9 @@ class LinkedList{
             self.tail = self.head
             self.length = 1
         }else{
-            
-        self.tail.next = newNode
-        self.tail = newNode
-        self.length+=1
-            
+            self.tail.next = newNode
+            self.tail = newNode
+            self.length+=1
         }
         
     }
@@ -58,19 +55,17 @@ class LinkedList{
         return currentNode
     }
     
-    func printList() -> [[String:String]]{
+    func toArray() -> [[String:String]]{
         var printArray = [[String:String]]()
         var currentNode = self.head
         var i = 0
         
         while(i<self.length-1){
-            printArray.append(["Long": String((currentNode.value as! CLLocationCoordinate2D).longitude),
-                               "Lat": String((currentNode.value as! CLLocationCoordinate2D).latitude)])
+            printArray.append(["Long": String((currentNode.value as! CLLocationCoordinate2D).longitude), "Lat": String((currentNode.value as! CLLocationCoordinate2D).latitude)])
             currentNode = currentNode.next!
             i+=1
         }
         return printArray
-        
     }
     
     func mapPath() -> [CLLocationCoordinate2D]{
@@ -84,10 +79,7 @@ class LinkedList{
             i+=1
         }
         return pathArray
-        
     }
-    
-    
 }
 
 class Node{

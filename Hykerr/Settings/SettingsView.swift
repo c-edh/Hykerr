@@ -16,11 +16,14 @@ struct SettingsView: View {
 
     var body: some View {
         VStack{
-            Image(uiImage: viewModel.profileImage)
-                .resizable().frame(width: 100, height: 100, alignment: .center)
-                .cornerRadius(100)
-                .shadow(color: .black, radius: 2, y:3)
+            if ((viewModel.profileImage) != nil){
+                Image(uiImage: (viewModel.profileImage)!)
+                    .resizable().frame(width: 100, height: 100, alignment: .center)
+                    .cornerRadius(100)
+                    .shadow(color: .black, radius: 2, y:3)
                 .padding(20)
+                
+            }
             
             VStack{
                 HStack{
@@ -48,7 +51,6 @@ struct SettingsView: View {
                 
             }.onAppear{
                 viewModel.getUserInformation()
-                viewModel.getUserPicture()
             }
             .frame(width:270)
             .padding(20).background(K.color.button.buttonColor).cornerRadius(20).shadow(radius: 10)
@@ -68,17 +70,11 @@ struct SettingsView: View {
             }).padding()
 
             
-            
-            
-            
-            
-            
         }.onAppear{
             
-        }.navigationTitle("Settings")
-        
-        
-        
+        }
+        .navigationTitle("Settings")
+
     }
 }
 

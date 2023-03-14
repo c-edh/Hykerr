@@ -24,7 +24,7 @@ struct SignUpView: View {
     @State var userHint = ""
     @State private var showUserHint = false
     
-    @EnvironmentObject var authenticViewModel : AuthenticViewModel
+    @EnvironmentObject var authenticViewModel : AuthenticationViewModel
     
     var body: some View {
         

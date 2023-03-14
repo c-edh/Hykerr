@@ -14,7 +14,7 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var forgotPassword = false
     
-    @EnvironmentObject var authenticViewModel: AuthenticViewModel
+    @EnvironmentObject var authenticViewModel: AuthenticationViewModel
     
     var body: some View {
             if !authenticViewModel.signedIn{
@@ -80,6 +80,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView().environmentObject(AuthenticViewModel())
+        LoginView().environmentObject(AuthenticationViewModel())
     }
 }

@@ -16,7 +16,7 @@ struct HykerrApp: App {
 
     var body: some Scene {
         WindowGroup {
-            let authenticViewModel  = AuthenticViewModel()
+            let authenticViewModel  = AuthenticationViewModel()
             let mainViewModel = MainViewModel()
             ContentView()
                 .environmentObject(authenticViewModel)
@@ -29,9 +29,7 @@ struct HykerrApp: App {
 class AppDelegate: NSObject, UIApplicationDelegate{
  
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        
         FirebaseApp.configure()
-        
         return true
     }
  }

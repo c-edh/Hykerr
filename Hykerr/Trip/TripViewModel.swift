@@ -12,82 +12,46 @@ import MapKit
 
 class TripViewModel: ObservableObject{
     
-    private var db = Firestore.firestore()
     @Published var trips : [Trip] = []
     @Published var mapTripCoords : [CLLocationCoordinate2D]?
     
+    private let firebaseManager = FirebaseManager.shared
+    
     func getUserTrips(){
-        guard let user = Auth.auth().currentUser else{
-            print("Error couldnt get current user")
-            return
-        }
+        guard let user = Auth.auth().currentUser else{ print("Error couldnt get current user"); return }
+                
+        let pastTrips: CollectionReference = FirebaseCollection.TripsCollection.Past(user: user).tripCollections
         
-        let tripsData = self.db.collection("Users").document(user.uid).collection("Trips").document("Past Trips")
-        
-        tripsData.getDocument { (document, error) in
-            if let document = document, document.exists{
-                guard let arrayOfTrips = document.get("Past Trips Information") as? [Any] else{
-                    return
+        firebaseManager.getFirebaseDataInCollection(for: pastTrips) { result in
+            switch result {
+            case .success(let trips):
+                var tripArray: [Trip] = []
+                for trip in trips{
+                    tripArray.append(Trip(documentReference: trip))
                 }
-                
-//                guard let arrayOfTrips = tripsDocument as? [Any] else{
-//                    return
-//                }
-//
-            
-                
-                for trip in arrayOfTrips{
-                    guard let data = trip as? [String: Any] else{
-                        return
-                    }
-                    print("trip array is being appended too")
-                    self.trips.append(Trip(startingLocation: data["Starting City"] as! String, endingLocation: data["Ending City"] as! String,
-                                           distance: data["Distance"] as! Double, date: data["Date"] as! String, coords: data["Coords in Trip"] as! [Any]))
-                
-            
+                DispatchQueue.main.async {
+                    self.trips = tripArray
                 }
-                
-                
-                
+            case .failure(let failure):
+                print(failure)
             }
         }
-
     }
     
     func getCoords(coords: [Any]){
         var tripCoords : [CLLocationCoordinate2D] = []
-        
         
         for coord in coords {
             let coordDictionary = coord as! [String:Any]
             tripCoords.append(CLLocationCoordinate2D(latitude: Double(coordDictionary["Lat"] as! String)!,
                                                      longitude: Double(coordDictionary["Long"] as! String)!
                                                     ))
-            
         }
-                    
-        
-        self.mapTripCoords = tripCoords
-                    
-    }
-    
-    
-    
-
-}
-
-struct Trip: Identifiable{
-    var id = UUID()
-    let startingLocation: String
-    let endingLocation : String
-    let distance : Double
-    let date: String
-    let coords: [Any]
-    
-    let hander: () -> Void = {
-        print("Tapped Item")
+             
+        DispatchQueue.main.async { self.mapTripCoords = tripCoords }
     }
 }
+
 
 
 //MARK: - MapView
@@ -96,7 +60,6 @@ struct TripView: UIViewRepresentable{
     func makeCoordinator() -> Coordinator {
         return TripView.Coordinator()
     }
-    
     
     //@Binding var region : MKCoordinateRegion
     @Binding var coordsInTrip : [CLLocationCoordinate2D]?
@@ -153,7 +116,6 @@ class Coordinator : NSObject,MKMapViewDelegate{
     
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer{
-       
         let render = MKPolylineRenderer(overlay: overlay)
         render.strokeColor = .black
         render.lineCap = .round
