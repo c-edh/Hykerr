@@ -19,6 +19,7 @@ protocol FirebaseManagerProtocol: AuthenticationProtocol, UploadDataProtocol, Ge
 protocol AuthenticationProtocol{
     func createAccount(email: String, password: String, completion: @escaping (Result<Bool, Error>) -> Void)
     func firebaseCredential(email: String, password: String, loginCompletion: @escaping (Result<Bool,Error>)->())
+    func resetPassword(email: String)
     func logOutFromFirebase() -> Bool
 }
 
@@ -36,6 +37,13 @@ extension AuthenticationProtocol{
             else{
                 completion(.success(true))
             }
+        }
+    }
+    
+    func resetPassword(email: String){
+        Auth.auth().sendPasswordReset(withEmail: email) { error in
+            if let e = error{ print(e.localizedDescription) }
+            else{ print("success") }
         }
     }
     

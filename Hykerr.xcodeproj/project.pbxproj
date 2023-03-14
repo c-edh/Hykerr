@@ -27,6 +27,7 @@
 		F465122B29BFE99B00C61F8B /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465122A29BFE99B00C61F8B /* TripModel.swift */; };
 		F465122F29C0190600C61F8B /* FirebaseManagerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465122E29C0190600C61F8B /* FirebaseManagerProtocols.swift */; };
 		F465123129C0192600C61F8B /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465123029C0192600C61F8B /* FirebaseConstants.swift */; };
+		F465123529C0365A00C61F8B /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465123429C0365A00C61F8B /* UserModel.swift */; };
 		F4AE8A69287CC47D00E9078B /* LinkedList.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AE8A68287CC47D00E9078B /* LinkedList.swift */; };
 		F4B784B82877A483001707A2 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B72877A483001707A2 /* MainViewModel.swift */; };
 		F4B784BA2877A56C001707A2 /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B784B92877A56C001707A2 /* AuthenticationViewModel.swift */; };
@@ -60,6 +61,7 @@
 		F465122A29BFE99B00C61F8B /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
 		F465122E29C0190600C61F8B /* FirebaseManagerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManagerProtocols.swift; sourceTree = "<group>"; };
 		F465123029C0192600C61F8B /* FirebaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConstants.swift; sourceTree = "<group>"; };
+		F465123429C0365A00C61F8B /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		F4AE8A68287CC47D00E9078B /* LinkedList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinkedList.swift; sourceTree = "<group>"; };
 		F4B784B52877A2F7001707A2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		F4B784B72877A483001707A2 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 		F465123329C0325000C61F8B /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
+				F404842B28A317D20009A5CF /* SideMenuContentModel.swift */,
 				F4F17FF3288E165A00382746 /* SideMenuViewModel.swift */,
 				F4F17FF1288E146C00382746 /* SideMenuView.swift */,
 			);
@@ -210,7 +213,7 @@
 			children = (
 				F4CE7AA42878D297008703E7 /* PhotoPicker.swift */,
 				F4AE8A68287CC47D00E9078B /* LinkedList.swift */,
-				F404842B28A317D20009A5CF /* SideMenuContentModel.swift */,
+				F465123429C0365A00C61F8B /* UserModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -340,6 +343,7 @@
 				F401048A287388F400348851 /* MainView.swift in Sources */,
 				F401048828737C3300348851 /* SignUpView.swift in Sources */,
 				F401047E287376C300348851 /* Persistence.swift in Sources */,
+				F465123529C0365A00C61F8B /* UserModel.swift in Sources */,
 				F404842C28A317D20009A5CF /* SideMenuContentModel.swift in Sources */,
 				F4010477287376C200348851 /* ContentView.swift in Sources */,
 				F4B784BC2877C8DA001707A2 /* K.swift in Sources */,

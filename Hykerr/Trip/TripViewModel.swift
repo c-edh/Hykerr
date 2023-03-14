@@ -66,7 +66,6 @@ struct TripView: UIViewRepresentable{
 
     let mapViewDelegate = Coordinator()
 
-    
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
         
@@ -74,8 +73,6 @@ struct TripView: UIViewRepresentable{
             print("NO COORDS")
             return map
         }
-        
-        
         
         let path = MKPolyline(coordinates: coordsInTrip, count: coordsInTrip.count)
 
@@ -95,8 +92,6 @@ struct TripView: UIViewRepresentable{
         map.addAnnotation(startLocationPin)
         map.addAnnotation(endLocationPin)
         
-        
-         
          //map.setVisibleMapRect(path.boundingMapRect, animated: true)  //Shows whole path
        DispatchQueue.main.async {
 
@@ -111,7 +106,6 @@ struct TripView: UIViewRepresentable{
     }
     
     
-    
 class Coordinator : NSObject,MKMapViewDelegate{
     
     
@@ -122,8 +116,6 @@ class Coordinator : NSObject,MKMapViewDelegate{
         render.lineWidth = 3.0
         return render
     }
-    
-
 }
 }
     

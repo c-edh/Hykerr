@@ -10,9 +10,6 @@ import CoreLocation
 import MapKit
 import CoreLocationUI
 
-
-
-
 struct MainView: View {
     
     @StateObject private var viewModel = MainViewModel()
@@ -57,9 +54,7 @@ struct MainView: View {
                     }
                     
                 }
-            
         }
-        
         
     }
     func toggleSearch(){
@@ -228,8 +223,8 @@ struct SearchBarField: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         
-        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel()).preferredColorScheme(.light)
-        MainView().environmentObject(AuthenticViewModel()).environmentObject(MainViewModel()).preferredColorScheme(.dark)
+        MainView().environmentObject(AuthenticationViewModel()).environmentObject(MainViewModel()).preferredColorScheme(.light)
+        MainView().environmentObject(AuthenticationViewModel()).environmentObject(MainViewModel()).preferredColorScheme(.dark)
         
         
     }
@@ -242,24 +237,21 @@ struct mapView: UIViewRepresentable{
     func makeCoordinator() -> Coordinator {
         return mapView.Coordinator()
     }
-    
-    
     //@Binding var region : MKCoordinateRegion
     @Binding var coordsInTrip: LinkedList?
-
+    
     let mapViewDelegate = Coordinator()
-
     
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
         
         if let coordsInTrip = coordsInTrip {
-        let region = MKCoordinateRegion(
-            center: coordsInTrip.head.value  as! CLLocationCoordinate2D,
-            latitudinalMeters: 750,
-            longitudinalMeters: 750
-        )
-        map.region = region
+            let region = MKCoordinateRegion(
+                center: coordsInTrip.head.value  as! CLLocationCoordinate2D,
+                latitudinalMeters: 750,
+                longitudinalMeters: 750
+            )
+            map.region = region
         }
         
         return map
@@ -268,7 +260,7 @@ struct mapView: UIViewRepresentable{
     func updateUIView(_ map: MKMapView, context: Context) {
         
         guard let coordsInTrip = coordsInTrip else { return }
-
+        
         let currentLocation = coordsInTrip.tranverseToIndex(coordsInTrip.length)
         
         let region = MKCoordinateRegion(
@@ -288,9 +280,9 @@ struct mapView: UIViewRepresentable{
         print("this updated")
         
         guard let coordsInTrip = coordsInTrip else { print("addPath failed"); return }
-
-       let path = MKPolyline(coordinates: coordsInTrip.mapPath(), count: coordsInTrip.mapPath().count)
-
+        
+        let path = MKPolyline(coordinates: coordsInTrip.mapPath(), count: coordsInTrip.mapPath().count)
+        
         
         if !map.overlays.isEmpty{ map.removeOverlays(map.overlays) }
         
@@ -300,15 +292,15 @@ struct mapView: UIViewRepresentable{
     
     
     
-class Coordinator : NSObject,MKMapViewDelegate{
-    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer{
-        let render = MKPolylineRenderer(overlay: overlay)
-        render.strokeColor = .black
-        render.lineCap = .round
-        render.lineWidth = 3.0
-        return render
+    class Coordinator : NSObject,MKMapViewDelegate{
+        func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer{
+            let render = MKPolylineRenderer(overlay: overlay)
+            render.strokeColor = .black
+            render.lineCap = .round
+            render.lineWidth = 3.0
+            return render
+        }
     }
-}
     
     
     

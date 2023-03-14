@@ -9,7 +9,6 @@ import Foundation
 import Firebase
 import FirebaseFirestore
 
-
 class SideMenuViewModel: ObservableObject{
     @Published var profileImage = UIImage(systemName: "person.circle")!
     @Published var userName = "User"
@@ -34,9 +33,7 @@ class SideMenuViewModel: ObservableObject{
         getUserName()
     }
     
-    
     func getUserName(){
-        
         guard let user = Auth.auth().currentUser else{ return }
         let userData = self.db.collection("Users").document(user.uid)
         

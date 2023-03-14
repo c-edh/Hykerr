@@ -14,7 +14,6 @@ class AuthenticationViewModel: ObservableObject{
     @Published var signedIn = false
     @Published var loginUserErrorFeedback = ""
     
-    private var db = Firestore.firestore()
     private let firebaseManager = FirebaseManager.shared
     
   //MARK: - Login to Account
@@ -33,11 +32,7 @@ class AuthenticationViewModel: ObservableObject{
     
     //Send reset request
     func resetUserPassword(_ email: String){
-        //TODO set up reset password func
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if let e = error{ print(e.localizedDescription) }
-            else{ print("success") }
-        }
+        firebaseManager.resetPassword(email: email)
     }
     
 //MARK: - Create Account
@@ -54,7 +49,6 @@ class AuthenticationViewModel: ObservableObject{
             }
         }
     }
-    
     
     func userInfo(name: String){
         
@@ -76,13 +70,9 @@ class AuthenticationViewModel: ObservableObject{
         Auth.auth().addStateDidChangeListener { [weak self] auth, user in
             
             guard let user = user else{ print("Still no user is found"); return }
-            guard let reference = self?.db.collection("Users").document(user.uid) else{
-                return
-            }
-            let data = [
-                "Name" : ["first": firstName, "last":lastName],
-                "PhoneNumber":["personal":phoneNumber,"emergency":userEmergencyContact]
-            ]
+            let reference = FirebaseCollection.Users(user: user).documentReference
+            
+            let data = [ "Name" : ["first": firstName, "last":lastName], "PhoneNumber":["personal":phoneNumber,"emergency":userEmergencyContact] ]
             
             self?.firebaseManager.addToFirebase(with: reference, data: data, completion: { result in
                 switch result {
@@ -100,11 +90,9 @@ class AuthenticationViewModel: ObservableObject{
         print("UPLOAD USER PROFILE PICTURE HAS STARTED")
         Auth.auth().addStateDidChangeListener { [weak self] auth, user in
             guard let user else{ print("Still no user is found"); return }
-            
             self?.firebaseManager.addImageToFireBase(storeAt: .user(userID: user.uid), image: image)
         }
     }
-    
     
 //MARK: - LogOut
     

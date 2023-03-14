@@ -97,7 +97,6 @@ struct SignUpView: View {
                         authenticViewModel.uploadUserPersonalInfo(firstName: firstName, lastName: lastName, phoneNumber: phoneNumber, userEmergencyContact: contactNumber)
                         
                     
-                    
                     //If user selects a profile picture uploads, else it uses default
                     if userSelectedImage == true{
                         authenticViewModel.uploadUserProfilePicture(with: profileImage)
